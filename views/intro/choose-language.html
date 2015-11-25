@@ -1,0 +1,25 @@
+﻿
+<div class="container intro-bg fill" ng-class="{{pageClass}}">
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <img src="../assets/img/logo.png" alt="logo" />
+
+        </div>
+    </div>
+    <div class="row" id="select-lang">
+        <div class="col-xs-12">
+            <h4 class="white-color" ng-class="(lang == 'he') ? ['text-right', 'rtl'] : 'text-left'">{{langString[lang].label}}</h4>
+            <select class="form-control white-bg" ng-class="(lang == 'he') ? ['text-right', 'rtl'] : 'text-left'">
+                <option ng-class="(lang == 'he') ? ['text-right', 'rtl'] : 'text-left'" value="{{langString[lang].hebrew}}">{{langString[lang].hebrew}}</option>
+                <option value="{{langString[lang].english}}">{{langString[lang].english}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <a href="#/register" class="btn general-btn btn-shadow round-btn orange-btn bottom-btn">{{langString[lang].btn}}</a>
+        </div>
+    </div>
+</div>
+
+

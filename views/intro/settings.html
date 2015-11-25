@@ -1,0 +1,79 @@
+﻿<div class="container intro-bg fill" ng-class="{{pageClass}}">
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <img src="../assets/img/logo.png" alt="logo" />
+        </div>
+    </div>
+    <div class="container-fluid" id="alarms">
+        <div class="row rtl">
+            <div class="col-xs-12 white-bg">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <input type="radio" name="setting-alarm" id="without-alarm" class="black-radio" checked="checked" />
+                        <label for="without-alarm" class="black-radio-label grey-color">אין לי צורך בתזכורת כרגע</label>
+                        <br />
+                        <input type="radio" name="setting-alarm" id="with-alarm" class="black-radio" />
+                        <label for="with-alarm" class="black-radio-label grey-color">בבקשה עזרו לי לזכור</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="col-xs-6">
+                            <div class="jumbotron">
+                                <h1 class="grey-color" ng-click="addAlarm()">{{moreAlarm}}</h1>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="jumbotron">
+                                <h1 class="grey-color">08:00</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <input type="checkbox" name="days" id="Sunday" checked="checked" class="days" />
+                        <label for="Sunday" class="days-label">א</label>
+
+                        <input type="checkbox" name="days" id="Monday" checked="checked" class="days" />
+                        <label for="Monday" class="days-label">ב</label>
+
+                        <input type="checkbox" name="days" id="Tuesday" checked="checked" class="days" />
+                        <label for="Tuesday" class="days-label">ג</label>
+
+                        <input type="checkbox" name="days" id="Wednesday" checked="checked" class="days" />
+                        <label for="Wednesday" class="days-label">ד</label>
+
+                        <input type="checkbox" name="days" id="Thursday" checked="checked" class="days" />
+                        <label for="Thursday" class="days-label">ה</label>
+
+                        <input type="checkbox" name="days" id="Friday" checked="checked" class="days" />
+                        <label for="Friday" class="days-label">ו</label>
+
+                        <input type="checkbox" name="days" id="Saturday" class="days" />
+                        <label for="Saturday" class="days-label">ש</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <br />
+                        <input type="checkbox" name="days" id="sound" class="alarms-checkbox" />
+                        <label for="sound" class="alarms-checkbox-label grey-color">צליל</label>
+                        <br />
+                        <label class="ringtone grey-color">ברירת מחדל - KeepItApp</label>
+                        <br />
+                        <input type="checkbox" name="days" id="vibrate" checked="checked" class="alarms-checkbox" />
+                        <label for="vibrate" class="alarms-checkbox-label grey-color">רטט</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-xs-12">
+            <a href="#/main" class="btn general-btn btn-shadow round-btn orange-btn bottom-btn">הבא</a>
+        </div>
+    </div>
+</div>

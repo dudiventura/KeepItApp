@@ -4,7 +4,21 @@ var keepItApp = angular.module('keepItApp', ['ngRoute', 'ngAnimate', 'ui.bootstr
 keepItApp.config(function ($routeProvider) {
     $routeProvider
     .when('/', {
-        controller: 'test',
-        templateUrl:'/views/a.html'
+        controller: 'chooseLanguage',
+        templateUrl: '/views/intro/choose-language.html'
+    })
+    .when('/register', {
+        controller: 'chooseLanguage',
+        templateUrl: '/views/intro/register.html'
+    })
+    .when('/settings', {
+        controller: 'settings',
+        templateUrl: '/views/intro/settings.html'
+    })
+    .when('/main', {
+        controller: 'user',
+        templateUrl: '/views/main/main.html'
     })
 });
+
+

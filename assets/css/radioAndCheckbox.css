@@ -1,0 +1,127 @@
+
+/*#region Alarms Radio*/
+
+input[type=radio].black-radio {
+    position: absolute;
+    z-index: -1000;
+    right: -1000px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+}
+
+    input[type=radio].black-radio + label.black-radio-label {
+        padding-right: 23px;
+        height: 18px;
+        display: inline-block;
+        line-height: 18px;
+        background-repeat: no-repeat;
+        background-position: 100% 0;
+        vertical-align: middle;
+        cursor: pointer;
+    }
+
+    input[type=radio].black-radio:checked + label.black-radio-label {
+        background-position: 100% -18px;
+    }
+
+label.black-radio-label {
+    background-image: url(http://csscheckbox.com/checkboxes/u/csscheckbox_5c98e1b48cfc20eb67c467ebaba5ef67.png);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/*#endregion*/
+
+/*#region Days Checkbox*/
+
+input[type=checkbox].days {
+    position: absolute;
+    z-index: -1000;
+    right: -1000px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+}
+
+    input[type=checkbox].days + label.days-label {
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    input[type=checkbox].days:checked + label.days-label {
+        background-color: rgba(129, 128, 126, 0.65);
+        padding-right: 11px;
+        color: #fff;
+        border: none;
+    }
+
+label.days-label {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border-radius: 50%;
+    padding-right: 10px;
+    line-height: 28px;
+    vertical-align: middle;
+    border: 1px solid rgba(129, 128, 126, 0.65);
+    width: 30px;
+    height: 30px;
+    margin: 0 2%;
+}
+
+/*#endregion*/
+
+/*#region Alarms Checkbox*/
+
+input[type=checkbox].alarms-checkbox {
+    position: absolute;
+    z-index: -1000;
+    left: -1000px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+}
+
+    input[type=checkbox].alarms-checkbox + label.alarms-checkbox-label {
+        padding-right: 24px;
+        height: 19px;
+        display: inline-block;
+        line-height: 19px;
+        background-repeat: no-repeat;
+        background-position: 100% 0;
+        vertical-align: middle;
+        cursor: pointer;
+    }
+
+    input[type=checkbox].alarms-checkbox:checked + label.alarms-checkbox-label {
+        background-position: 100% -19px;
+    }
+
+label.alarms-checkbox-label {
+    background-image: url(http://csscheckbox.com/checkboxes/u/csscheckbox_584715bec9b728f21a7a9ecb1b4eecf9.png);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/*#endregion*/

@@ -1,0 +1,164 @@
+﻿
+/*#region Settings*/
+
+@font-face {
+    font-family: 'FbOxford-Regular';
+    src: url('../fonts/FbOxford-Regular.otf') format('opentype');
+}
+
+html, body {
+    height: 100%;
+    font-family:'FbOxford-Regular', calibri !important;
+}
+
+label {
+font-weight:normal;
+}
+
+[data-ng-view] {
+    height: 100%;
+}
+
+[alt="logo"] {
+    width: 40%;
+    margin-top: 5%;
+}
+
+[alt="Brand"] {
+    width: 35%;
+}
+
+.fill {
+    min-height: 100%;
+    height: 100%;
+}
+
+.container {
+    position: relative;
+}
+
+.bottom-btn {
+    margin-top: 50%;
+    color: #000;
+}
+
+.jumbotron {
+    background-color: transparent;
+}
+
+.navbar-default {
+    border: none;
+    background-color: transparent;
+}
+
+/*#endregion*/
+
+/*#region Bg's & Colors*/
+
+.intro-bg {
+    background-color: #5d5e5e;
+}
+
+.white-color {
+    color: rgb(242, 233, 224);
+}
+
+.white-bg {
+    background-color: rgb(242, 233, 224);
+}
+
+.grey-color {
+    color: rgb(111, 107, 98) !important;
+}
+
+/*#endregion*/
+
+/*#region Btn's*/
+
+.general-btn {
+    width: 100%;
+    padding: 0.5%;
+}
+
+.round-btn {
+    border-radius: 0.3em;
+}
+
+.btn-shadow {
+    box-shadow: 0 0 3px #4b4c4c;
+}
+
+.orange-btn {
+    background-color: #f79041;
+}
+
+/*#endregion*/
+
+/*#region Text*/
+
+.rtl {
+    direction: rtl;
+}
+
+/*#endregion*/
+
+/*#region Select Lang Page*/
+
+#select-lang {
+    margin-top: 40%;
+}
+
+/*#endregion*/
+
+/*#region Register Page*/
+
+#register-form {
+    margin-top: 20%;
+}
+
+    #register-form .row:not(:first-child) {
+        margin-top: 5%;
+    }
+
+/*#endregion*/
+
+/*#region Alarms*/
+
+#alarms .col-xs-12.white-bg {
+    margin-top: 10%;
+    padding: 4%;
+}
+
+.ringtone {
+    width: 100%;
+}
+
+    .ringtone:before {
+        content: '';
+        background: url(../img/alram.png) no-repeat;
+        display: inline-block;
+        width: 17px;
+        height: 17px;
+        background-size: cover;
+        margin-left: 3%;
+        position: relative;
+        top: 4px;
+    }
+
+[ng-class="settings"] .bottom-btn {
+    margin-top: 14%;
+}
+
+/*#addAlarm {
+display:none;
+}*/
+
+/*#endregion*/
+
+/*#region Circle Page*/
+
+.circle-container img {
+    width: 80%;
+}
+
+/*#endregion*/
