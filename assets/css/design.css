@@ -8,11 +8,11 @@
 
 html, body {
     height: 100%;
-    font-family:'FbOxford-Regular', calibri !important;
+    font-family: 'FbOxford-Regular', calibri !important;
 }
 
 label {
-font-weight:normal;
+    font-weight: normal;
 }
 
 [data-ng-view] {
@@ -55,20 +55,28 @@ font-weight:normal;
 
 /*#region Bg's & Colors*/
 
-.intro-bg {
-    background-color: #5d5e5e;
+[data-ng-class="intro-bg"], .intro-bg {
+    background-color: #5e5e5e;
 }
 
 .white-color {
-    color: rgb(242, 233, 224);
+    color: #f4eae0;
 }
 
-.white-bg {
-    background-color: rgb(242, 233, 224);
+[data-ng-class="white-bg"], .white-bg {
+    background-color: #f4eae0;
 }
 
 .grey-color {
     color: rgb(111, 107, 98) !important;
+}
+
+    .grey-color.disable {
+        color: #bcb5ad !important;
+    }
+
+.grey-bg {
+    background-color: #bab3ad;
 }
 
 /*#endregion*/
@@ -89,7 +97,7 @@ font-weight:normal;
 }
 
 .orange-btn {
-    background-color: #f79041;
+    background-color: #f79043;
 }
 
 /*#endregion*/
@@ -149,10 +157,6 @@ font-weight:normal;
     margin-top: 14%;
 }
 
-/*#addAlarm {
-display:none;
-}*/
-
 /*#endregion*/
 
 /*#region Circle Page*/
@@ -160,5 +164,49 @@ display:none;
 .circle-container img {
     width: 80%;
 }
+
+/*#endregion*/
+
+/*#region Question Page*/
+
+.icon-holder {
+    padding: 7%;
+}
+
+    .icon-holder:last-child {
+        position: relative;
+        left: 4%;
+    }
+
+    .icon-holder img {
+        width: 75%;
+    }
+
+.question-type {
+    float: right;
+    width: 45%;
+}
+
+.question {
+    position: relative;
+    bottom: 0.5em;
+    padding: 1%;
+}
+
+.answers {
+    padding: 0;
+    list-style: none;
+}
+
+.answer {
+    background-color: #fbf9f5;
+    padding: 5%;
+    font-size: 124%;
+    box-shadow:0 0 5px #d7d0c8;
+}
+
+    .answer:not(:first-child) {
+        margin-top: 2%;
+    }
 
 /*#endregion*/

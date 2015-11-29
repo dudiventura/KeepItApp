@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html ng-app="keepItApp">
 <head>
-    <title>{{title}}</title>
+    <title>{{Page.title()}}</title>
     <!--Meta-->
 	<meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -14,7 +14,7 @@
     
 </head>
 <body>
-    <div data-ng-view></div> 
+    <div data-ng-view data-ng-class="{{bgClass}}"></div> 
 
     <!--lib-->
     <script src="assets/angular/angular.js"></script>
@@ -23,8 +23,9 @@
     <script src="assets/angular/ui-bootstrap-tpls-0.14.3.min.js"></script>
 
     <!--app-->
-    <script src="assets/js/app.js"></script>
-    <script src="assets/js/controllers.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/factories.js"></script>
+    <script src="app/controllers.js"></script>
     <script>
         console.log(angular);
     </script>
