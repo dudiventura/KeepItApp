@@ -1,5 +1,10 @@
 ﻿var controllers = {
-    chooseLanguage: function ($scope, Page) {
+    appTitle: function ($scope) {
+        $scope.$on('$routeChangeSuccess', function (event, data) {
+            $scope.pageTitle = data.title;
+        });
+    },
+    chooseLanguage: function ($scope) {
         $scope.langString = {
             he: {
                 label: 'בבקשה בחר שפה:',
@@ -18,10 +23,8 @@
         $scope.bgClass = 'intro-bg';
         $scope.title = 'hhh';
         $scope.pageClass = 'choose-language';
-
-        Page.setTitle('choose language');
     },
-    settings: function ($scope, Page) {
+    settings: function ($scope) {
         $scope.setAlarm = false;
         $scope.pageClass = 'settings';
         $scope.bgClass = 'intro-bg';
@@ -31,13 +34,47 @@
             this.moreAlarm = alarm;
         }
     },
-    user: function ($scope, Page) {
+    user: function ($scope) {
         $scope.pageClass = 'main';
         $scope.bgClass = 'intro-bg'; 
     },
-    question: function ($scope, Page) {
+    question: function ($scope) {
         $scope.pageClass = 'question';
         $scope.bgClass = 'intro-bg';
+        $scope.showPopup = false;
+        $scope.bonus = false;
+        $scope.general = false;
+        $scope.blessing = '';
+        $scope.answerText = ''
+        $scope.points = ''
+        $scope.wrong = false;
+
+        $scope.showHidePopup = function (popup) {
+            $scope.showPopup = !$scope.showPopup;
+            switch (popup) {
+                case undefined: { $scope.bonus = false; $scope.general = false; } break;
+                case 'bonus': { $scope.bonus = true; } break;
+                case 'general': { $scope.general = true; } break;
+                default:
+
+            }
+        }
+
+        $scope.checkAnswer = function (ansNum) {
+            if (ansNum == 3) {
+                $scope.blessing = 'מעולה!';
+                $scope.answerText = 'הרווחת הרגע';
+                $scope.points = '150 נקודות';
+                $scope.wrong = false;
+                $scope.showHidePopup('general');
+            } else {
+                $scope.blessing = 'התשובה הנכונה היא:';
+                $scope.answerText = '';
+                $scope.points = '3. קוראים לו, אם הוא לא מגיב, צובטים לו את עצם הסטרנום';
+                $scope.wrong = true;
+                $scope.showHidePopup('general');
+            }
+        }
     }
   
 };
