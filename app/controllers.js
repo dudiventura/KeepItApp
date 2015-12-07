@@ -24,7 +24,7 @@
         $scope.title = 'hhh';
         $scope.pageClass = 'choose-language';
         var s = {'categories':'all','lang':'he'};
-        Switcher.getSessions('questionHandler','getCategories',s).success(function (data, status) { console.log(data); console.log(status); });
+        Switcher.getSessions('questionHandler', 'getCategories', s).success(function (data, status) { alert(JSON.stringify(data)); alert(status); });
     },
     settings: function ($scope) {
         $scope.setAlarm = false;
