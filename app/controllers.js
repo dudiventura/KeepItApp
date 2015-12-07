@@ -4,7 +4,7 @@
             $scope.pageTitle = data.title;
         });
     },
-    chooseLanguage: function ($scope) {
+    chooseLanguage: function ($scope, Switcher) {
         $scope.langString = {
             he: {
                 label: 'בבקשה בחר שפה:',
@@ -23,6 +23,8 @@
         $scope.bgClass = 'intro-bg';
         $scope.title = 'hhh';
         $scope.pageClass = 'choose-language';
+        var s = {'categories':'all','lang':'he'};
+        Switcher.getSessions('questionHandler','getCategories',s).success(function (data, status) { console.log(data); console.log(status); });
     },
     settings: function ($scope) {
         $scope.setAlarm = false;

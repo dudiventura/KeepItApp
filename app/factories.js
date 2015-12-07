@@ -1,11 +1,13 @@
 ﻿
 var factories = {
-    Page: function () {
-        var title = 'KeetItApp';
-        return {
-            title: function () { return title; },
-            setTitle: function (newTitle) { title = newTitle }
+    Switcher: function ($http) {
+        var url = 'http://dev.mly.co.il/trivia/switcher.php';
+
+        this.getSessions = function (uHandler, uRequest, uData) {
+            return $http.get(url, { params: { handler: uHandler, handlerRequest: uRequest, requestVars: uData }, headers: { 'Authorization': function () { return null; } } });
         };
+
+        return this;
     }
 };
 

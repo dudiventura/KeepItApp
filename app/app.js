@@ -1,4 +1,10 @@
-﻿
+﻿document.addEventListener('deviceready', function onDeviceReady() {
+    alert('device ready');
+    angular.bootstrap(document, ['keepItApp']);
+    alert(device.platform);
+}, false);
+
+
 var keepItApp = angular.module('keepItApp', ['ngRoute', 'ngAnimate', 'ui.bootstrap']);
 
 keepItApp.config(function ($routeProvider) {
