@@ -32,6 +32,7 @@
   <plugin name="cordova-plugin-inappbrowser" source="npm"/>
   <plugin name="cordova-plugin-network-information" source="npm"/>
   <plugin name="cordova-plugin-splashscreen" version="2.1.0" source="npm" />
+  <plugin name="cordova-plugin-globalization" source="npm" />
   <plugin name="cordova-plugin-whitelist" source="npm" />
 
   <icon src="res/icon/ios/Icon.png" />
