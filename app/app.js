@@ -9,9 +9,9 @@ if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
 
 function onDeviceReady() {
     alert('device ready');
-    createTheApp();
     angular.bootstrap(document, ['keepItApp']);
-    //alert(device.platform);
+    createTheApp();
+    alert(device.platform);
 }
 
 

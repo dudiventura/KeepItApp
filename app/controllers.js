@@ -23,7 +23,7 @@
         $scope.bgClass = 'intro-bg';
         $scope.title = 'hhh';
         $scope.pageClass = 'choose-language';
-        var s = {'categories':'all','lang':'he'};
+        var s = {categories:'all',lang:'he'};
         Switcher.getSessions('questionHandler', 'getCategories', s).then(this.onSuccess, this.onError);
         $scope.onSuccess = function (data, status) {
             alert(JSON.stringify(data));
