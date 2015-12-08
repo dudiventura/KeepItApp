@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.picsize.keepItApp" version="3.0.0">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.picsize.keepItApp" version="1.0.0">
   <name>keepItApp</name>
   <description>
     keepItApp
   </description>
-  <author href="http://www.picsize.co.il" email="shay@picsize.co.il">Next Step</author>
+  <author href="http://www.picsize.co.il" email="shay@picsize.co.il">Picsize</author>
   <content src="index.html"/>
 
   <preference name="phonegap-version" value="cli-5.2.0"/>
@@ -26,9 +26,9 @@
   <preference name="android-build-tool" value="gradle" />
 
   <plugin name="cordova-plugin-console" source="npm"/>
-  <plugin name="org.apache.cordova.device" version="0.2.12" />
+  <plugin name="cordova-plugin-device" source="npm" />
   <plugin name="cordova-plugin-geolocation" source="npm" />
-  <plugin name="org.apache.cordova.dialogs" version="0.3.0" />
+  <plugin name="cordova-plugin-dialogs" source="npm" />
   <plugin name="cordova-plugin-inappbrowser" source="npm"/>
   <plugin name="cordova-plugin-network-information" source="npm"/>
   <plugin name="cordova-plugin-splashscreen" version="2.1.0" source="npm" />
@@ -63,7 +63,6 @@
 
 
   <access origin="*"/>
-  <access origin="*.pushwoosh.com"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
   <allow-intent href="tel:*"/>
