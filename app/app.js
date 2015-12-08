@@ -9,7 +9,7 @@ if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
 
 function onDeviceReady() {
     alert('device ready');
-    alert(device.platform);
+    //alert(device.platform);
 }
 
 

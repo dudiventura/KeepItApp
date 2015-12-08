@@ -23,7 +23,7 @@
         $scope.bgClass = 'intro-bg';
         $scope.title = 'hhh';
         $scope.pageClass = 'choose-language';
-        var s = { categories: 'all', lang: 'he' };
+        var s = { categories: 'all', lang: $scope.lang };
         Switcher.getSessions('questionHandler', 'getCategories', s).success(function (data, status) {alert(JSON.stringify(data));});
     },
     settings: function ($scope) {
