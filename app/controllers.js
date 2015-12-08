@@ -23,11 +23,8 @@
         $scope.bgClass = 'intro-bg';
         $scope.title = 'hhh';
         $scope.pageClass = 'choose-language';
-        var s = {'categories':'all','lang':'he'};
-        Switcher.getSessions('questionHandler', 'getCategories', s).then(this.onSuccess, this.onError);
-        $scope.onSuccess = function (data, status) {
-            alert(JSON.stringify(data));
-        }
+        var s = { categories: 'all', lang: 'he' };
+        Switcher.getSessions('questionHandler', 'getCategories', s).success(function (data, status) {alert(JSON.stringify(data));});
     },
     settings: function ($scope) {
         $scope.setAlarm = false;
@@ -41,7 +38,7 @@
     },
     user: function ($scope) {
         $scope.pageClass = 'main';
-        $scope.bgClass = 'intro-bg'; 
+        $scope.bgClass = 'intro-bg';
     },
     question: function ($scope) {
         $scope.pageClass = 'question';
@@ -81,7 +78,7 @@
             }
         }
     }
-  
+
 };
 
 keepItApp.controller(controllers);
