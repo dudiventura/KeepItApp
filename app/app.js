@@ -1,5 +1,5 @@
 ﻿
-
+keepItApp = angular.module('keepItApp', ['ngRoute', 'ngAnimate', 'ui.bootstrap']);
 
 if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
     document.addEventListener('deviceready', onDeviceReady, false);
@@ -11,8 +11,7 @@ function onDeviceReady() {
     alert('device ready');
     navigator.globalization.getPreferredLanguage(
     function (language) {
-        keepItApp = angular.module('keepItApp', ['ngRoute', 'ngAnimate', 'ui.bootstrap']);
-        localStorage.setItem('userLanguage', language.value);
+        localStorage.setItem('userLanguage', language.value.split('-')[0]);
     },
     function () { alert('Error getting language\n'); });
 }
