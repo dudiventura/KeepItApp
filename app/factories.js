@@ -11,7 +11,5 @@ var factories = {
     }
 };
 
-function setFactories() {
-    keepItApp.factory(factories);
-}
+keepItApp.factory(factories);
 

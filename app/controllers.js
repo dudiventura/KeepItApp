@@ -84,6 +84,4 @@
   
 };
 
-function setConrollers() {
-    keepItApp.controller(controllers);
-}
+keepItApp.controller(controllers);
