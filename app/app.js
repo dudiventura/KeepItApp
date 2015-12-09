@@ -9,11 +9,13 @@ if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
 
 function onDeviceReady() {
     alert('device ready');
-    navigator.globalization.getPreferredLanguage(
-    function (language) {
-        localStorage.setItem('userLanguage', language.value.split('-')[0]);
-    },
-    function () { alert('Error getting language\n'); });
+    angular.bootstrap(document, ['keepItApp']);
+    alert(device.platrorm);
+    //navigator.globalization.getPreferredLanguage(
+    //function (language) {
+    //    localStorage.setItem('userLanguage', language.value.split('-')[0]);
+    //},
+    //function () { alert('Error getting language\n'); });
 }
 
 
