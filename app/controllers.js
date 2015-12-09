@@ -19,7 +19,7 @@
                 btn: 'Next'
             }
         };
-        $scope.lang = localStorage.getItem('userLanguage');
+        $scope.lang = 'he';
         $scope.bgClass = 'intro-bg';
         $scope.title = 'hhh';
         $scope.pageClass = 'choose-language';

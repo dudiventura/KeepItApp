@@ -10,7 +10,7 @@ if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
 function onDeviceReady() {
     alert('device ready');
     angular.bootstrap(document, ['keepItApp']);
-    alert(device.platrorm);
+    alert(device.platform);
     //navigator.globalization.getPreferredLanguage(
     //function (language) {
     //    localStorage.setItem('userLanguage', language.value.split('-')[0]);
