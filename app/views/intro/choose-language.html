@@ -9,9 +9,8 @@
     <div class="row" id="select-lang">
         <div class="col-xs-12">
             <h4 class="white-color" ng-class="(lang == 'he') ? ['text-right', 'rtl'] : 'text-left'">{{langString[lang].label}}</h4>
-            <select class="form-control white-bg" ng-class="(lang == 'he') ? ['text-right', 'rtl'] : 'text-left'">
-                <option ng-class="(lang == 'he') ? ['text-right', 'rtl'] : 'text-left'" value="{{langString[lang].hebrew}}">{{langString[lang].hebrew}}</option>
-                <option value="{{langString[lang].english}}">{{langString[lang].english}}</option>
+            <select class="form-control white-bg" ng-class="(lang == 'he') ? ['text-right', 'rtl'] : 'text-left'" ng-options="language as language.name for language in languages" ng-model="item" ng-change="changeLanguage()">
+
             </select>
         </div>
     </div>

@@ -4,7 +4,9 @@
             $scope.pageTitle = data.title;
         });
     },
-    chooseLanguage: function ($scope, Switcher) {
+    chooseLanguage: function ($scope) {
+        $scope.lang = (localStorage.getItem('lang') != undefined) ? localStorage.getItem('lang') : 'he';
+        $scope.languages = [{ name: 'עברית', value: 'he' }, { name: 'English', value: 'en' }]
         $scope.langString = {
             he: {
                 label: 'בבקשה בחר שפה:',
@@ -19,12 +21,71 @@
                 btn: 'Next'
             }
         };
-        $scope.lang = 'he';
+        $scope.changeLanguage = function () {
+            $scope.lang = $scope.item.value;
+            localStorage.setItem('lang', $scope.item.value);
+        }
         $scope.bgClass = 'intro-bg';
-        $scope.title = 'hhh';
         $scope.pageClass = 'choose-language';
-        var s = { categories: 'all', lang: $scope.lang };
-        Switcher.getSessions('questionHandler', 'getCategories', s).success(function (data, status) {alert(JSON.stringify(data));});
+        //var s = { categories: 'all', lang: $scope.lang };
+        //Switcher.getSessions('questionHandler', 'getCategories', s).success(function (data, status) {alert(JSON.stringify(data));});
+    },
+    register: function ($scope, View, Switcher, Message) {
+        $scope.lang = localStorage.getItem('lang');
+        $scope.langString = {
+            he: {
+                email: 'אימייל',
+                password: 'סיסמה',
+                name: 'שם פרטי',
+                btn: 'הבא',
+                registrationFail: 'הרשמה נכשלה',
+                emailExists: 'כתובת מייל קיימת',
+                userExists: 'משתמש קיים',
+                activationFail: 'תהליך ההרשמה נכשל',
+                registrationComplete:'נרשמת בהצלחה',
+                messageTitle:'הודעה'
+
+            },
+            en: {
+                email: 'Email',
+                password: 'Password',
+                name: 'First Name',
+                btn: 'Next',
+                registrationFail: 'registration fail',
+                emailExists: 'email exists',
+                userExists: 'user exists',
+                activationFail: 'activation fail',
+                registrationComplete: 'registration complete',
+                messageTitle:'Title'
+            }
+        };
+
+        $scope.bgClass = 'intro-bg';
+        $scope.pageClass = 'register';
+
+        $scope.registerToApp = function () {
+            data = {
+                email: $scope.email,
+                pw: $scope.password,
+                fName: $scope.name
+            };
+            Switcher.getSessions('userHandler', 'registerUser', data)
+                .success(function (res) {
+                    switch (res) {
+                        case 'registrationFail': { Message.showMessage($scope.langString[$scope.lang].registrationFail, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn); } break;
+                        case 'emailExists': { Message.showMessage($scope.langString[$scope.lang].emailExists, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn); } break;
+                        case 'userExists ': { Message.showMessage($scope.langString[$scope.lang].userExists, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn); } break;
+                        case 'activationFail': { Message.showMessage($scope.langString[$scope.lang].activationFail, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn); } break;
+                        default: {
+                            Message.showMessage($scope.langString[$scope.lang].registrationComplete, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn);
+                            View.changeView('settings');
+                        } break;
+
+                    }
+                })
+                .error(function () { alert('error'); });
+        }
+        
     },
     settings: function ($scope) {
         $scope.setAlarm = false;
@@ -37,10 +98,22 @@
         }
     },
     user: function ($scope) {
+        $scope.lang = localStorage.getItem('lang');
+        $scope.langString = {
+            he: {
+                title:'הנושא היום הוא:'
+
+            },
+            en: {
+                title:'The subjet today is:'
+            }
+        };
+
         $scope.pageClass = 'main';
         $scope.bgClass = 'intro-bg';
+
     },
-    question: function ($scope) {
+    question: function ($scope, Switcher) {
         $scope.pageClass = 'question';
         $scope.bgClass = 'intro-bg';
         $scope.showPopup = false;

@@ -13,10 +13,10 @@
             </nav>
         </div>
     </div>
-    
-    <div class="row rtl">
+
+    <div class="row" ng-class="(lang == 'he')?'rtl':''">
         <div class="col-xs-12 text-center">
-            <h4 class="grey-color">התחל לדעת</h4>
+            <h4 class="grey-color">{{langString[lang].title}}</h4>
             <br />
         </div>
     </div>
@@ -26,6 +26,4 @@
             <a href="#/question?type=1"><img src="assets/img/6Circle.png" /></a>
         </div>
     </div>
-
-    
 </div>

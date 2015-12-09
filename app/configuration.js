@@ -7,7 +7,7 @@ keepItApp.config(function ($routeProvider) {
         title: 'Choose Language'
     })
     .when('/register', {
-        controller: 'chooseLanguage',
+        controller: 'register',
         templateUrl: 'app/views/intro/register.html',
         title: 'Register'
     })

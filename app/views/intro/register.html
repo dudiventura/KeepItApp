@@ -8,23 +8,23 @@
     <form class="form-group rtl" id="register-form">
         <div class="row">
             <div class="col-xs-12">
-                <input class="white-bg form-control" type="email" placeholder="אימייל" />
+                <input class="white-bg form-control" type="email" ng-model="email" placeholder="{{langString[lang].email}}" />
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <input class="white-bg form-control" type="password" placeholder="סיסמה" />
+                <input class="white-bg form-control" type="password" ng-model="password" placeholder="{{langString[lang].password}}" />
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <input class="white-bg form-control" type="text" placeholder="שם פרטי" />
+                <input class="white-bg form-control" type="text" ng-model="name" placeholder="{{langString[lang].name}}" />
             </div>
         </div>
     </form>
     <div class="row">
         <div class="col-xs-12">
-            <a href="#/settings" class="btn general-btn btn-shadow round-btn orange-btn bottom-btn">{{langString[lang].btn}}</a>
+            <a ng-click="registerToApp()" class="btn general-btn btn-shadow round-btn orange-btn bottom-btn">{{langString[lang].btn}}</a> 
         </div>
     </div>
 </div>

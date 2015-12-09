@@ -8,6 +8,22 @@ var factories = {
         };
 
         return this;
+    },
+    View: function ($location) {
+        this.changeView = function (view) {
+            $location.path(view);
+        }
+        return this;
+    },
+    Message: function () {
+        this.showMessage = function (message, title, btn) {
+            if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+                navigator.notification.alert(message, null, title, btn);
+            } else {
+                alert(message);
+            }  
+        }
+        return this;
     }
 };
 
