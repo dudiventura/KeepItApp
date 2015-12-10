@@ -15,7 +15,7 @@ label {
     font-weight: normal;
 }
 
-[data-ng-view] {
+[ng-view] {
     height: 100%;
 }
 
@@ -55,7 +55,7 @@ label {
 
 /*#region Bg's & Colors*/
 
-[data-ng-class="intro-bg"], .intro-bg {
+[ng-class="intro-bg"], .intro-bg {
     background-color: #5e5e5e;
 }
 
@@ -63,7 +63,7 @@ label {
     color: #f4eae0;
 }
 
-[data-ng-class="white-bg"], .white-bg {
+[ng-class="white-bg"], .white-bg {
     background-color: #f4eae0;
 }
 

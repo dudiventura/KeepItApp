@@ -6,7 +6,7 @@
     },
     chooseLanguage: function ($scope) {
         $scope.lang = (localStorage.getItem('lang') != undefined) ? localStorage.getItem('lang') : 'he';
-        $scope.languages = [{ name: 'עברית', value: 'he' }, { name: 'English', value: 'en' }]
+        $scope.languages = [{ id:1, name: 'עברית', value: 'he' }, { id:2, name: 'English', value: 'en' }];
         $scope.langString = {
             he: {
                 label: 'בבקשה בחר שפה:',

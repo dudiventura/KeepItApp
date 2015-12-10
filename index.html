@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
-<html data-ng-app="keepItApp">
-<head data-ng-controller="appTitle">
-    <title data-ng-bind="pageTitle"></title>
+<html data-ng-app="keepItApp"><!--data-ng-app="keepItApp"-->
+<head ng-controller="appTitle">
+    <title ng-bind="pageTitle"></title>
     <!--Meta-->
 	<meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -14,7 +14,7 @@
     
 </head>
 <body>
-    <div data-ng-view data-ng-class="{{bgClass}}"></div> 
+    <div ng-view ng-class="{{bgClass}}"></div> 
 
     <!--lib-->
     <script src="assets/angular/angular.js"></script>
