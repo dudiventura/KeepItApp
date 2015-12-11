@@ -7,7 +7,11 @@ if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
 
 function onDeviceReady() {
     angular.bootstrap(document, ['keepItApp']);
-    window.plugins.sim.getSimInfo(function (s) { alert('s:\n' + JSON.stringify(s)); }, function (e) { alert('e:\n' + JSON.stringify(e)); });
+    window.plugins.sim.getSimInfo(function (s) {
+        alert('your phone number is:\n' + s.phoneNumber);
+    }, function (e) {
+        alert('e:\n' + JSON.stringify(e));
+    });
 }
 
 
