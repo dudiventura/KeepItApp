@@ -6,12 +6,34 @@ if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
 } 
 
 function onDeviceReady() {
-    angular.bootstrap(document, ['keepItApp']);
-    window.plugins.sim.getSimInfo(function (s) {
-        alert('your phone number is:\n' + s.phoneNumber);
-    }, function (e) {
-        alert('e:\n' + JSON.stringify(e));
-    });
+    getPhoneLanguage();
+    getPhoneNumber();
+    startApp();
+}
+
+function getPhoneLanguage() {
+    var onSuccess = function (res) { localStorage.setItem('lang', res.value.split('-')[0]); }
+    var onFaild = function () { }
+
+    navigator.globalization.getPreferredLanguage(onSuccess, onFaild);
+}
+ 
+function getPhoneNumber() {
+    var onSuccess = function (res) { alert('your phone number is:\n' + res.phoneNumber); }
+    var onFaild = function (error) { alert('Opps...:\n' + JSON.stringify(error)); }
+
+    window.plugins.sim.getSimInfo(onSuccess, onFaild);
+
+}
+
+function startApp() {
+    var start = setInterval(function () {
+        alert(localStorage.getItem('lang'));
+        if (localStorage.getItem('lang') !== undefined) {
+            clearInterval(start);
+            angular.bootstrap(document, ['keepItApp']);
+        }
+    }, 1000);
 }
 
 
