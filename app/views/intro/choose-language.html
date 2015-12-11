@@ -9,9 +9,10 @@
     <div class="row" id="select-lang">
         <div class="col-xs-12">
             <h4 class="white-color" ng-class="(lang == 'he') ? ['text-right', 'rtl'] : 'text-left'">{{langString[lang].label}}</h4>
-            <select class="form-control white-bg" ng-class="(lang == 'he') ? ['text-right', 'rtl'] : 'text-left'" ng-model="item" ng-init="item = item || (lang == 'he')? languages[0]:languages[1]" ng-options="language as language.name for language in languages" ng-change="changeLanguage()">
+            <button class="btn general-btn btn-shadow round-btn white-bg" ng-class="(lang == 'he') ? ['btn-text-right', 'rtl'] : 'btn-text-left'" ng-model="languageBtn" ng-click="openHideLanguagePopup()" ng-init="init()">{{languageBtn}}</button>
+            <!--<select class="form-control white-bg" ng-class="(lang == 'he') ? ['text-right', 'rtl'] : 'text-left'" ng-model="item" ng-init="item = item || (lang == 'he')? languages[0]:languages[1]" ng-options="language as language.name for language in languages" ng-change="changeLanguage()">
 
-            </select>
+            </select>-->
         </div>
     </div>
     <div class="row">
@@ -21,4 +22,11 @@
     </div>
 </div>
 
+
+<div class="popup-language popup-bg-message" data-ng-show="showLangPopup">
+    <ul ng-class="(lang == 'he') ? ['text-right', 'rtl'] : 'text-left'" class="list-group language-holder">
+        <li ng-click="changeLanguage('he')" class="list-group-item language">{{langString[lang].hebrew}}</li>
+        <li ng-click="changeLanguage('en')" class="list-group-item language">{{langString[lang].english}}</li>
+    </ul>
+</div>
 

@@ -104,6 +104,14 @@ label {
     background-color: #f79043;
 }
 
+.btn-text-right {
+    text-align: right !important;
+}
+
+.btn-text-left {
+    text-align: left !important;
+}
+
 /*#endregion*/
 
 /*#region Text*/
@@ -249,6 +257,32 @@ label {
 
 /*#region Popups*/
 
+.popup-language {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    -ms-transform: scaleX(-1);
+    transform: scaleX(-1);
+    -ms-filter: "FlipH";
+    filter: FlipH;
+    width: 94%;
+    height: 16%;
+    position: absolute;
+    top: 48%;
+    left: 3%;
+    padding:5% 2% !important;
+}
+
+    .popup-language .list-group {
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        -ms-transform: scaleX(-1);
+        transform: scaleX(-1);
+        -ms-filter: "FlipH";
+        filter: FlipH;
+    }
+
 .popup-overlay {
     position: absolute;
     width: 100%;
@@ -284,8 +318,6 @@ label {
     font-size: 116%;
 }
 
-
-
 .popup-bg-general {
     background-image: url('../img/popup.png');
     background-size: 100% 100%;
@@ -315,8 +347,27 @@ label {
         font-size: 140%;
     }
 
-.popup-answer p.wrong {
-font-size:110%;
+    .popup-answer p.wrong {
+        font-size: 110%;
+    }
+
+/*#endregion*/
+
+/*#region Lists*/
+
+.language-holder {
+        margin: 2% 1% 0 0;
+    padding: 0;
 }
+
+.language {
+    padding: 5px 15px;
+    background-color: transparent;
+    border: none;
+}
+
+    .language:hover {
+        background-color:#D4D0C7;
+    }
 
 /*#endregion*/

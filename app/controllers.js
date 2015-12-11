@@ -6,7 +6,8 @@
     },
     chooseLanguage: function ($scope) {
         $scope.lang = (localStorage.getItem('lang') != undefined) ? localStorage.getItem('lang') : 'he';
-        $scope.languages = [{ id:1, name: 'עברית', value: 'he' }, { id:2, name: 'English', value: 'en' }];
+        $scope.showLangPopup = false;
+        //$scope.languages = [{ id:1, name: 'עברית', value: 'he' }, { id:2, name: 'English', value: 'en' }];
         $scope.langString = {
             he: {
                 label: 'בבקשה בחר שפה:',
@@ -21,14 +22,25 @@
                 btn: 'Next'
             }
         };
-        $scope.changeLanguage = function () {
-            $scope.lang = $scope.item.value;
-            localStorage.setItem('lang', $scope.item.value);
+        $scope.init = function () {
+            if ($scope.lang == 'en') {
+                $scope.languageBtn = 'English';
+            }
+            else {
+                $scope.languageBtn = 'עברית';
+            }
+        }
+        $scope.changeLanguage = function (value) {
+            $scope.lang = value;
+            localStorage.setItem('lang', value);
+            $scope.openHideLanguagePopup();
+            $scope.init();
+        }
+        $scope.openHideLanguagePopup = function () {
+            $scope.showLangPopup = !$scope.showLangPopup;
         }
         $scope.bgClass = 'intro-bg';
         $scope.pageClass = 'choose-language';
-        //var s = { categories: 'all', lang: $scope.lang };
-        //Switcher.getSessions('questionHandler', 'getCategories', s).success(function (data, status) {alert(JSON.stringify(data));});
     },
     register: function ($scope, View, Switcher, Message) {
         $scope.lang = localStorage.getItem('lang');
