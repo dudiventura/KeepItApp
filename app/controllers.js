@@ -54,8 +54,9 @@
                 emailExists: 'כתובת מייל קיימת',
                 userExists: 'משתמש קיים',
                 activationFail: 'תהליך ההרשמה נכשל',
-                registrationComplete:'נרשמת בהצלחה',
-                messageTitle:'הודעה'
+                registrationComplete: 'נרשמת בהצלחה',
+                messageTitle: 'הודעה',
+                inputVerification: 'יש למלא את כל הפרטים'
 
             },
             en: {
@@ -68,7 +69,8 @@
                 userExists: 'user exists',
                 activationFail: 'activation fail',
                 registrationComplete: 'registration complete',
-                messageTitle:'Title'
+                messageTitle: 'Title',
+                inputVerification: 'Please fill in all the fields'
             }
         };
 
@@ -76,7 +78,14 @@
         $scope.pageClass = 'register';
 
         $scope.registerToApp = function () {
-            data = {
+            if ($scope.validateInput($scope.email) && $scope.validateInput($scope.password) && $scope.validateInput($scope.name)) {
+                $scope.register(); 
+            } else {
+                Message.showMessage($scope.langString[$scope.lang].inputVerification, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn);
+            }
+        }
+        $scope.register = function () {
+            var data = {
                 email: $scope.email,
                 pw: $scope.password,
                 fName: $scope.name
@@ -97,7 +106,9 @@
                 })
                 .error(function () { alert('error'); });
         }
-        
+        $scope.validateInput = function (value) {
+            return (value == undefined || value == '') ? false : true;
+        };
     },
     settings: function ($scope) {
         $scope.setAlarm = false;
@@ -109,20 +120,28 @@
             this.moreAlarm = alarm;
         }
     },
-    user: function ($scope) {
+    wheel: function ($scope, Switcher, Message) {
         $scope.lang = localStorage.getItem('lang');
         $scope.langString = {
             he: {
-                title:'הנושא היום הוא:'
+                title: 'הנושא היום הוא:'
 
             },
             en: {
-                title:'The subjet today is:'
+                title: 'The subjet today is:'
             }
         };
 
         $scope.pageClass = 'main';
         $scope.bgClass = 'intro-bg';
+        //handler=questionHandler&handlerRequest=getCategories&requestVars={"categories":"all","lang":"he"}
+        var data = { categories: 'all', lang: $scope.lang }
+        console.log(data);
+        Switcher.getSessions('questionHandler', 'getCategories', data)
+            .success(function (res) {
+                JSON.stringify(res);
+            })
+            .error(function (e) { alert('error'); });
 
     },
     question: function ($scope, Switcher) {

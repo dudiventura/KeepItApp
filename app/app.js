@@ -1,13 +1,14 @@
 ﻿
-keepItApp = angular.module('keepItApp', ['ngRoute', 'ngAnimate', 'ui.bootstrap']);
-
-if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
-    document.addEventListener('deviceready', app.onDeviceReady, false);
-}
-
 var app = {
+    init: function () {
+        keepItApp = angular.module('keepItApp', ['ngRoute', 'ngAnimate', 'ui.bootstrap']);
+
+        if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+            document.addEventListener('deviceready', app.onDeviceReady, false);
+        }
+    },
     onDeviceReady: function () {
-        this. getPhoneLanguage();
+        this.getPhoneLanguage();
         this.getPhoneNumber();
         this.startApp();
     },
@@ -30,6 +31,8 @@ var app = {
         }, 1000);
     }
 }
+
+app.init();
 
 
 

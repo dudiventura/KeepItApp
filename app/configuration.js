@@ -16,10 +16,10 @@ keepItApp.config(function ($routeProvider) {
         templateUrl: 'app/views/intro/settings.html',
         title: 'Settings'
     })
-    .when('/main', {
-        controller: 'user',
-        templateUrl: 'app/views/main/main.html',
-        title: 'Main'
+    .when('/wheel', {
+        controller: 'wheel',
+        templateUrl: 'app/views/main/wheel.html',
+        title: 'Wheel'
     }).
     when('/question', {
         controller: 'question',
