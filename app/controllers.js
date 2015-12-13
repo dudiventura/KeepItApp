@@ -99,6 +99,7 @@
                         case 'activationFail': { Message.showMessage($scope.langString[$scope.lang].activationFail, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn); } break;
                         default: {
                             Message.showMessage($scope.langString[$scope.lang].registrationComplete, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn);
+                            localStorage.setItem('userId',res.userId);
                             View.changeView('settings');
                         } break;
 
