@@ -10,7 +10,7 @@
   <preference name="phonegap-version" value="cli-5.2.0"/>
   <preference name="permissions" value="none"/>
   <preference name="orientation" value="portrait"/>
-  <preference name="target-device" value="universal"/>
+  <preference name="target-device" value="handset"/>
   <preference name="fullscreen" value="false"/>
   <preference name="webviewbounce" value="true"/>
   <preference name="prerendered-icon" value="true"/>
@@ -33,7 +33,7 @@
   <plugin name="cordova-plugin-network-information" source="npm"/>
   <plugin name="cordova-plugin-splashscreen" version="2.1.0" source="npm" />
   <plugin name="cordova-plugin-globalization" source="npm" />
-  <plugin name="cordova-plugin-sim" source="npm"/>
+  <plugin name="cordova-plugin-sim" source="npmm"/>
   <plugin name="cordova-plugin-whitelist" source="npm" />
 
   <icon src="res/icon/ios/Icon.png" />
