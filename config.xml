@@ -33,8 +33,13 @@
   <plugin name="cordova-plugin-network-information" source="npm"/>
   <plugin name="cordova-plugin-splashscreen" version="2.1.0" source="npm" />
   <plugin name="cordova-plugin-globalization" source="npm" />
-  <plugin name="cordova-plugin-sim" source="npmm"/>
+  <plugin name="cordova-plugin-sim" source="npm"/>
   <plugin name="cordova-plugin-whitelist" source="npm" />
+
+  <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.9.0">
+    <param name="APP_ID" value="811529012269356" />
+    <param name="APP_NAME" value="JustConnect" />
+  </gap:plugin>
 
   <icon src="res/icon/ios/Icon.png" />
   <icon src="res/icon/android/drawable-ldpi/ic_launcher.png"   platform="android"    density="ldpi" />
