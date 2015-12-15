@@ -137,15 +137,15 @@
         };
 
         $scope.pageClass = 'main';
-        $scope.bgClass = 'intro-bg';
+        $scope.bgClass = 'intro-bg';         
         //handler=questionHandler&handlerRequest=getCategories&requestVars={"categories":"all","lang":"he"}
         var data = { categories: 'all', lang: $scope.lang }
         console.log(data);
-        Switcher.getSessions('questionHandler', 'getCategories', data)
+        $scope.categories = Switcher.getSessions('questionHandler', 'getCategories', data)
             .success(function (res) {
-                JSON.stringify(res);
+                return res;
             })
-            .error(function (e) { alert('error'); });
+            .error(function (e) { return []; });
 
     },
     question: function ($scope, Switcher) {

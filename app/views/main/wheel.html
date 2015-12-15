@@ -22,7 +22,18 @@
     </div>
 
     <div class="row">
+        <div class="col-sm-6 col-md-4" ng-repeat="cateory in categories" ng-style="background-color:{{categoty.color}}">
+            <div class="thumbnail">
+                <img src="{{category.icon}}">
+                <div class="caption">
+                    <h3 ng-bind="if(lang == 'he')? category.title_heb : category.title_en"></h3>
+                    <p>{{category.id}}</p>
+                    <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                </div>
+            </div>
+        </div>
         <div class="col-xs-12 circle-container text-center">
+
             <!--<a href="#/question?type=1"><img src="assets/img/6Circle.png" /></a>-->
             <!--<div id="colorWheel">
                 <span class="color01"></span>
