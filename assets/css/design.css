@@ -51,6 +51,12 @@ label {
     background-color: transparent;
 }
 
+.loading {
+position:absolute;
+top:50%;
+left:40%;
+}
+
 /*#endregion*/
 
 /*#region Bg's & Colors*/

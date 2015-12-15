@@ -25,17 +25,14 @@
 
     <div class="row">
         <div class="question intro-bg">
-            <h3 class="rtl white-color">איך בודקים הכרה אצל אדם מבוגר?</h3>
+            <h3 class="white-color" ng-class="(lang == 'he') ? 'rtl': ''">{{thisQuestion.questionDesc}}</h3>
         </div>
     </div>
 
     <div class="row">
         <div class="col-xs-12">
-            <ul class="answers list-decimal rtl">
-                <li class="answer" data-ng-click="checkAnswer(1)">1. נותנים לו סטירות קלות על הפרצוף</li>
-                <li class="answer" data-ng-click="checkAnswer(2)">2. שופכים עליו מים כדי להעיר אותו</li>
-                <li class="answer" data-ng-click="checkAnswer(3)">3. קוראים לו, אם הוא לא מגיב, צובטים לו את עצם הסטרנום</li>
-                <li class="answer" data-ng-click="checkAnswer(4)">4. מדגדגים לו את כפות הרגליים</li>
+            <ul class="answers list-decimal" ng-class="(lang == 'he') ? 'rtl': ''">
+                <li class="answer" ng-repeat="answer in answersIds" ng-click="checkAnswer(answer)">{{$index + 1}}. {{answerDesc[$index]}}</li>
             </ul>
         </div>
     </div>

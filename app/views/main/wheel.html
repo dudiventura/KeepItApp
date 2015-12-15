@@ -21,14 +21,16 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-6 col-md-4" ng-repeat="cateory in categories" ng-style="background-color:{{categoty.color}}">
-            <div class="thumbnail">
+    <div class="row" ng-class="(lang == 'he')?'rtl':''">
+        <div class="col-sm-6 col-md-4" ng-repeat="category in categoriesList track by category.id">
+            <div class="thumbnail" style="background-color:{{category.color}} !important;">
                 <img src="{{category.icon}}">
                 <div class="caption">
-                    <h3 ng-bind="if(lang == 'he')? category.title_heb : category.title_en"></h3>
+                    <h3 ng-bind="(lang == 'he')? category.title_he : category.title_en"></h3>
                     <p>{{category.id}}</p>
-                    <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                    <p>
+                        <a href="#/question?cat={{category.id}}" class="btn btn-primary" role="button">בחר שאלה</a>
+                    </p>
                 </div>
             </div>
         </div>

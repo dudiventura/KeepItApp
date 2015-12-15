@@ -4,7 +4,7 @@
             $scope.pageTitle = data.title;
         });
     },
-    chooseLanguage: function ($scope) {
+    chooseLanguage: function ($scope, View) {
         $scope.lang = (localStorage.getItem('lang') != undefined) ? localStorage.getItem('lang') : 'he';
         $scope.showLangPopup = false;
         //$scope.languages = [{ id:1, name: 'עברית', value: 'he' }, { id:2, name: 'English', value: 'en' }];
@@ -41,6 +41,10 @@
         }
         $scope.bgClass = 'intro-bg';
         $scope.pageClass = 'choose-language';
+
+        if (localStorage.getItem('userId') != undefined) {
+            View.changeView('wheel');
+        }
     },
     register: function ($scope, View, Switcher, Message) {
         $scope.lang = localStorage.getItem('lang');
@@ -92,12 +96,13 @@
             };
             Switcher.getSessions('userHandler', 'registerUser', data)
                 .success(function (res) {
-                    switch (res) {
+                    switch (res[0]) {
                         case 'registrationFail': { Message.showMessage($scope.langString[$scope.lang].registrationFail, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn); } break;
                         case 'emailExists': { Message.showMessage($scope.langString[$scope.lang].emailExists, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn); } break;
-                        case 'userExists ': { Message.showMessage($scope.langString[$scope.lang].userExists, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn); } break;
+                        case 'userExists': { Message.showMessage($scope.langString[$scope.lang].userExists, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn); } break;
                         case 'activationFail': { Message.showMessage($scope.langString[$scope.lang].activationFail, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn); } break;
                         default: {
+                            console.log(res[0]);
                             Message.showMessage($scope.langString[$scope.lang].registrationComplete, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn);
                             localStorage.setItem('userId', res.userId);
                             localStorage.setItem('email', $scope.email);
@@ -137,18 +142,20 @@
         };
 
         $scope.pageClass = 'main';
-        $scope.bgClass = 'intro-bg';         
-        //handler=questionHandler&handlerRequest=getCategories&requestVars={"categories":"all","lang":"he"}
+        $scope.bgClass = 'intro-bg';
+        $scope.categoriesList = [];
         var data = { categories: 'all', lang: $scope.lang }
         console.log(data);
-        $scope.categories = Switcher.getSessions('questionHandler', 'getCategories', data)
+        Switcher.getSessions('questionHandler', 'getCategories', data)
             .success(function (res) {
-                return res;
+                $scope.categoriesList = res;
             })
-            .error(function (e) { return []; });
+            .error(function (e) { $scope.categoriesList = []; });
 
     },
-    question: function ($scope, Switcher) {
+    question: function ($scope, $routeParams, Switcher) {
+        console.log($routeParams);
+        $scope.lang = localStorage.getItem('lang');
         $scope.pageClass = 'question';
         $scope.bgClass = 'intro-bg';
         $scope.showPopup = false;
@@ -158,6 +165,21 @@
         $scope.answerText = ''
         $scope.points = ''
         $scope.wrong = false;
+        $scope.thisQuestion = {};
+        $scope.answersIds = [];
+        $scope.answerDesc = [];
+
+        var data = { userId:localStorage.getItem('userId'), categoryId:$routeParams.cat, qType:'new', lang: $scope.lang }
+        console.log(data);
+        Switcher.getSessions('questionHandler', 'getUserQuestionByCategory', data)
+            .success(function (res) {
+                console.log(res);
+                $scope.thisQuestion = res;
+                $scope.answersIds = res.questionOptionIds.split(',');
+                $scope.answerDesc = res.questionOptions.split(',');
+            })
+            .error(function (e) { $scope.categoriesList = []; });
+
 
         $scope.showHidePopup = function (popup) {
             $scope.showPopup = !$scope.showPopup;
@@ -171,7 +193,7 @@
         }
 
         $scope.checkAnswer = function (ansNum) {
-            if (ansNum == 3) {
+            if (ansNum == $scope.answersIds[($scope.thisQuestion.answerId*1) -1]) {
                 $scope.blessing = 'מעולה!';
                 $scope.answerText = 'הרווחת הרגע';
                 $scope.points = '150 נקודות';
@@ -180,7 +202,7 @@
             } else {
                 $scope.blessing = 'התשובה הנכונה היא:';
                 $scope.answerText = '';
-                $scope.points = '3. קוראים לו, אם הוא לא מגיב, צובטים לו את עצם הסטרנום';
+                $scope.points = ($scope.thisQuestion.answerId * 1) + '. ' + $scope.thisQuestion.answerDesc;
                 $scope.wrong = true;
                 $scope.showHidePopup('general');
             }

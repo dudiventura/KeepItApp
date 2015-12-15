@@ -1,7 +1,7 @@
 ﻿
 var app = {
     init: function () {
-        keepItApp = angular.module('keepItApp', ['ngRoute', 'ngAnimate', 'ui.bootstrap']);
+        keepItApp = angular.module('keepItApp', ['ngRoute', 'ngAnimate', 'ui.bootstrap','angular-loading-bar']);
 
         if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
             document.addEventListener('deviceready', app.onDeviceReady, false);
