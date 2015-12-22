@@ -15,8 +15,14 @@ label {
     font-weight: normal;
 }
 
+canvas {
+    position: absolute;
+    left: -1.5em;
+    top: -5em;
+}
+
 [ng-view] {
-    height: 100%;
+    height: 130%;
 }
 
 [alt="logo"] {
@@ -52,9 +58,9 @@ label {
 }
 
 .loading {
-position:absolute;
-top:50%;
-left:40%;
+    position: absolute;
+    top: 50%;
+    left: 40%;
 }
 
 /*#endregion*/
@@ -183,6 +189,11 @@ left:40%;
     width: 80%;
 }
 
+.go-to-question {
+    position: relative;
+    top: 19em;
+}
+
 /*#endregion*/
 
 /*#region Question Page*/
@@ -218,10 +229,15 @@ left:40%;
 
 .answer {
     background-color: #fbf9f5;
-    padding: 5%;
-    font-size: 124%;
     box-shadow: 0 0 5px #d7d0c8;
 }
+
+    .answer label {
+        padding: 5%;
+        font-size: 124%;
+        width: 100%;
+        margin-bottom: 0;
+    }
 
     .answer:not(:first-child) {
         margin-top: 2%;
@@ -257,6 +273,12 @@ left:40%;
     font-size: 240%;
     font-weight: bold;
     color: #D22329;
+    outline: none;
+}
+
+.credit, .bonus {
+    color: #fff;
+    position: absolute;
 }
 
 /*#endregion*/
@@ -276,7 +298,7 @@ left:40%;
     position: absolute;
     top: 48%;
     left: 3%;
-    padding:5% 2% !important;
+    padding: 5% 2% !important;
 }
 
     .popup-language .list-group {
@@ -362,7 +384,7 @@ left:40%;
 /*#region Lists*/
 
 .language-holder {
-        margin: 2% 1% 0 0;
+    margin: 2% 1% 0 0;
     padding: 0;
 }
 
@@ -373,7 +395,7 @@ left:40%;
 }
 
     .language:hover {
-        background-color:#D4D0C7;
+        background-color: #D4D0C7;
     }
 
 /*#endregion*/

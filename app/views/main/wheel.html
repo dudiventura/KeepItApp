@@ -22,7 +22,7 @@
     </div>
 
     <div class="row" ng-class="(lang == 'he')?'rtl':''">
-        <div class="col-sm-6 col-md-4" ng-repeat="category in categoriesList track by category.id">
+        <!--<div class="col-sm-6 col-md-4" ng-repeat="category in categoriesList track by category.id">
             <div class="thumbnail" style="background-color:{{category.color}} !important;">
                 <img src="{{category.icon}}">
                 <div class="caption">
@@ -33,34 +33,15 @@
                     </p>
                 </div>
             </div>
-        </div>
+        </div>-->
         <div class="col-xs-12 circle-container text-center">
-
-            <!--<a href="#/question?type=1"><img src="assets/img/6Circle.png" /></a>-->
-            <!--<div id="colorWheel">
-                <span class="color01"></span>
-                <span class="color02"></span>
-                <span class="color03"></span>
-                <span class="color04"></span>
-                <span class="color05"></span>
-                <span class="color06"></span>
-                <span class="color07"></span>
-                <span class="color08"></span>
-                <span class="color09"></span>
-                <span class="color10"></span>
-            </div>-->
-            <!--<div id="venues" style="float:left">
-                <ul>
-                    <li><input id="venue-1" name="1" value="1" type="checkbox" checked="checked"><label for="venue-1">1</label></li>
-                    <li><input id="venue-2" name="2" value="2" type="checkbox" checked="checked"><label for="venue-2">2</label></li>
-                    <li><input id="venue-3" name="3" value="3" type="checkbox" checked="checked"><label for="venue-3">3</label></li>
-                    <li><input id="venue-4" name="4" value="4" type="checkbox" checked="checked"><label for="venue-4">4</label></li>
-                </ul>
-            </div>
             <div id="wheel">
-                <canvas id="canvas" width="600" height="600"></canvas>
+                <canvas id="canvas" width="350" height="350" ng-click="spin();"></canvas>
+                <a ng-href="#/question?cat={{selectedCategoryId}}" class="btn go-to-question" role="button">
+                    <label ng-bind="selectedCategory"></label>
+                </a>
             </div>
-            <div id="stats"><div id="counter"></div></div>-->
         </div>
     </div>
 </div>
+
