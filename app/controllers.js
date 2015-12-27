@@ -130,7 +130,7 @@
             this.moreAlarm = alarm;
         }
     },
-    wheel: function ($scope, Switcher, Message) {
+    wheel: function ($scope, $interval, Switcher, Message) {
         $scope.lang = localStorage.getItem('lang');
         $scope.langString = {
             he: {
@@ -146,128 +146,58 @@
         $scope.categoriesList = [];
         $scope.selectedCategory = '';
         $scope.selectedCategoryId = 0;
-        $scope.colors = [];
-        $scope.categoryName = [];
-        $scope.startAngle = 0;
-        $scope.arc = Math.PI / 6;
-        $scope.spinTimeout = null;
-        $scope.spinArcStart = 10;
-        $scope.spinTime = 0;
-        $scope.spinTimeTotal = 0;
-        $scope.ctx = null;
         var data = { userId: localStorage.getItem('userId'), lang: $scope.lang }
         console.log(data);
         Switcher.getSessions('questionHandler', 'getUserCategories', data)
             .success(function (res) {
                 console.log('getUserCategories', res);
                 $scope.categoriesList = res;
-                $scope.init(res);
+                $scope.createWheel(res);
             })
             .error(function (e) { console.log('error', e); $scope.categoriesList = []; });
 
-        $scope.init = function (data) {
-            
+        $scope.createWheel = function (data) {
+            var images = new Array();
             for (var i = 0; i < data.length; i++) {
-                $scope.colors.push(data[i].color);
                 var img = new Image();
-                img.src = data[i].icon;
                 img.id = data[i].id;
                 if (localStorage.getItem('lang') == 'he') {
                     img.alt = data[i].title_he;
                 } else {
                     img.alt = data[i].title_en;
                 }
-                $scope.categoryName.push(img);
+                img.src = data[i].icon;
+                images.push(img);
             }
-            console.log($scope.categoryName);
-            $scope.arc = Math.PI*2 / data.length;
-            $scope.drawRouletteWheel($scope.categoriesList);
-        }
-
-        $scope.drawRouletteWheel = function (data) {
-            var canvas = document.getElementById("canvas");
-            if (canvas.getContext) {
-                var outsideRadius = 100;
-                var textRadius = 60;
-                var insideRadius = 40;
-
-                $scope.ctx = canvas.getContext("2d");
-                $scope.ctx.clearRect(0, 0, 350, 350);
-
-
-                $scope.ctx.strokeStyle = "black";
-                $scope.lineWidth = 2;
-
-                $scope.ctx.font = 'bold 12px "FbOxford-Regular", Helvetica, Arial';
-
-                for (var i = 0; i < data.length; i++) {
-                    var angle = $scope.startAngle + i * $scope.arc;
-                    $scope.ctx.fillStyle = $scope.colors[i];
-
-                    $scope.ctx.beginPath();
-                    $scope.ctx.arc(180, 180, outsideRadius, angle, angle + $scope.arc, false);
-                    $scope.ctx.arc(180, 180, insideRadius, angle + $scope.arc, angle, true);
-                    $scope.ctx.stroke();
-                    $scope.ctx.fill();
-
-                    $scope.ctx.save();
-                    $scope.ctx.shadowOffsetX = -1;
-                    $scope.ctx.shadowOffsetY = -1;
-                    $scope.ctx.shadowBlur = 0;
-                    $scope.ctx.shadowColor = "none";
-                    $scope.ctx.fillStyle = "black";
-                    $scope.ctx.translate(180 + Math.cos(angle + $scope.arc / 2) * textRadius,
-                                  180 + Math.sin(angle + $scope.arc / 2) * textRadius);
-                    $scope.ctx.rotate(angle + $scope.arc / 2 + Math.PI / 2);
-                    var image = $scope.categoryName[i];
-                    $scope.ctx.drawImage(image, -$scope.ctx.measureText(image).width / 2, 0);
-                    $scope.ctx.restore();
-                }
-
-                //Arrow
-                
-            }
+            myWheel = SPINWHEEL.wheelOfDestiny('wheel', images);
+            myWheel.SetTheme({
+                Colour1: '#ff0',
+                Colour2: '#000',
+                WheelColour: "#fff",
+                FontColour1: "#000",
+                FontColour2: "#ff0",
+                Slice1Colour: "#006",
+                Font: "Arial",
+                PegColour1: "#fff",
+               PegColour2: "#000",
+                PointerColour1: "#fff",
+                PointerColour2: "#000",
+                CentreColour: "#903",
+                HighlightColour: 'transparent',
+                SliceText: ""
+            });
         }
 
         $scope.spin = function () {
-            spinAngleStart = Math.random() * 10 + 10;
-            $scope.spinTime = 0;
-            $scope.spinTimeTotal = Math.random() * 3 + 4 * 1000;
-            $scope.rotateWheel();
+            myWheel.Start();
+            myWheel.SetOnCompleted(function (category) {
+                console.log(category.alt);
+                $scope.selectedCategory = category.alt;
+                $scope.selectedCategoryId = category.id;
+            });
         }
 
-        $scope.rotateWheel = function () {
-            $scope.spinTime += 30;
-            if ($scope.spinTime >= $scope.spinTimeTotal) {
-                $scope.stopRotateWheel();
-                return;
-            }
-            var spinAngle = spinAngleStart - $scope.easeOut($scope.spinTime, 0, spinAngleStart, $scope.spinTimeTotal);
-            $scope.startAngle += (spinAngle * Math.PI / 180);
-            $scope.drawRouletteWheel($scope.categoriesList);
-            $scope.spinTimeout = setTimeout($scope.rotateWheel, 30);
-        }
-
-        $scope.stopRotateWheel = function () {
-            clearTimeout($scope.spinTimeout);
-            var degrees = $scope.startAngle * 180 / Math.PI + 90;
-            var arcd = $scope.arc * 180 / Math.PI;
-            var index = Math.floor((360 - degrees % 360) / arcd);
-            $scope.ctx.save();
-            $scope.ctx.font = 'bold 30px "FbOxford-Regular", Helvetica, Arial';
-            $scope.ctx.fillStyle = "black";
-            var text = $scope.categoryName[index];
-            //$scope.ctx.fillText(text, 100 - $scope.ctx.measureText(text).width / 2, 100 + 10);
-            $scope.selectedCategory = text.alt;
-            $scope.selectedCategoryId = text.id;
-            $scope.ctx.restore();
-        }
-
-        $scope.easeOut = function (t, b, c, d) {
-            var ts = (t /= d) * t;
-            var tc = ts * t;
-            return b + c * (tc + -3 * ts + 3 * t);
-        }
+        
 
     },
     question: function ($scope, $routeParams, $interval, Switcher, View, Message) {
@@ -293,8 +223,8 @@
         $scope.userAnswers = [];
         $scope.timerToBonus = 0;
 
-        //var data = { userId: localStorage.getItem('userId'), categoryId: $routeParams.cat, qType: 'new', lang: $scope.lang };
-        var data = { userId: 2, categoryId: 5, qType: 'new', lang: $scope.lang }
+        var data = { userId: localStorage.getItem('userId'), categoryId: $routeParams.cat, qType: 'new', lang: $scope.lang };
+        //var data = { userId: 2, categoryId: 5, qType: 'new', lang: $scope.lang }
         console.log(data);
         Switcher.getSessions('questionHandler', 'getUserQuestionByCategory', data)
             .success(function (res) {
@@ -315,8 +245,9 @@
                     $scope.startBonusCalculation($scope.thisQuestion);
                 }
                 else {
-                    Message.showMessage('אופס... אין שאלות בקטגוריה זו.', 'KeepItApp', 'אישור');
-                    View.changeView('wheel');
+                    var cb = function() { View.changeView('wheel'); }
+                    Message.showMessage('אופס... אין שאלות בקטגוריה זו.', 'KeepItApp', 'אישור', cb);
+                    
                 }
 
             })

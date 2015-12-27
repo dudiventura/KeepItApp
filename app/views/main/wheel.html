@@ -35,12 +35,10 @@
             </div>
         </div>-->
         <div class="col-xs-12 circle-container text-center">
-            <div id="wheel">
-                <canvas id="canvas" width="350" height="350" ng-click="spin();"></canvas>
-                <a ng-href="#/question?cat={{selectedCategoryId}}" class="btn go-to-question" role="button">
-                    <label ng-bind="selectedCategory"></label>
-                </a>
-            </div>
+            <div id="wheel" ng-click="spin();"></div>
+            <a ng-href="#/question?cat={{selectedCategoryId}}" class="btn btn-primary" role="button">
+                <label ng-bind="selectedCategory"></label>
+            </a>
         </div>
     </div>
 </div>

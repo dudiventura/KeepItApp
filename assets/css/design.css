@@ -15,12 +15,6 @@ label {
     font-weight: normal;
 }
 
-canvas {
-    position: absolute;
-    left: -1.5em;
-    top: -5em;
-}
-
 [ng-view] {
     height: 130%;
 }
@@ -193,6 +187,13 @@ canvas {
     position: relative;
     top: 19em;
 }
+
+#wheel {
+width:350px;
+height:350px;
+}
+
+.canvasForeground, .canvasWheel, .canvasSelector { display:none; }
 
 /*#endregion*/
 
