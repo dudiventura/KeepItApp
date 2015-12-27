@@ -61,7 +61,8 @@
                 activationFail: 'תהליך ההרשמה נכשל',
                 registrationComplete: 'נרשמת בהצלחה',
                 messageTitle: 'הודעה',
-                inputVerification: 'יש למלא את כל הפרטים'
+                inputVerification: 'יש למלא את כל הפרטים',
+                btnLogin:'התחברות'
 
             },
             en: {
@@ -75,7 +76,8 @@
                 activationFail: 'activation fail',
                 registrationComplete: 'registration complete',
                 messageTitle: 'Title',
-                inputVerification: 'Please fill in all the fields'
+                inputVerification: 'Please fill in all the fields',
+                btnLogin:'Login'
             }
         };
 
@@ -116,9 +118,37 @@
                 })
                 .error(function () { alert('error'); });
         }
+
         $scope.validateInput = function (value) {
             return (value == undefined || value == '') ? false : true;
         };
+
+        $scope.loginToApp = function () {
+            var data = {
+                email: $scope.email,
+                pw: $scope.password,
+                fName: $scope.name
+            };
+            Switcher.getSessions('userHandler', 'loginUser', data)
+                .success(function (res) {
+                    switch (res[0]) {
+                        case 'loginSuccess': {
+                            console.log(res[0]);
+                            Message.showMessage($scope.langString[$scope.lang].registrationComplete, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn);
+                            //localStorage.setItem('userId', res.userId);
+                            localStorage.setItem('email', $scope.email);
+                            localStorage.setItem('name', $scope.name);
+                            localStorage.setItem('password', $scope.password);
+                            View.changeView('settings');
+                        } break;
+                        default: {
+                            
+                        } break;
+
+                    }
+                })
+                .error(function () { alert('error'); });
+        }
     },
     settings: function ($scope) {
         $scope.setAlarm = false;
