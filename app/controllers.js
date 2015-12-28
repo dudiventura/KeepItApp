@@ -62,7 +62,12 @@
                 registrationComplete: 'נרשמת בהצלחה',
                 messageTitle: 'הודעה',
                 inputVerification: 'יש למלא את כל הפרטים',
-                btnLogin:'התחברות'
+                btnLogin: 'התחברות',
+                incorrectName: 'שם לא נכון',
+                incorrectPassword: 'סיסמה לא נכונה',
+                accountInactive: 'משתמש חסום',
+                incorrectEmail: 'כתובת מייל לא נכונה',
+                loginComplete:'התחברת בהצלחה'
 
             },
             en: {
@@ -77,13 +82,24 @@
                 registrationComplete: 'registration complete',
                 messageTitle: 'Title',
                 inputVerification: 'Please fill in all the fields',
-                btnLogin:'Login'
+                btnLogin: 'Login',
+                incorrectName: 'Incorrect name',
+                incorrectPassword: 'Incorrect password',
+                accountInactive: 'Account inactive',
+                incorrectEmail: 'Incorrect email',
+                loginComplete: 'Login success'
             }
         };
 
         $scope.bgClass = 'intro-bg';
         $scope.pageClass = 'register';
 
+        //validate input
+        $scope.validateInput = function (value) {
+            return (value == undefined || value == '') ? false : true;
+        };
+
+        //registration
         $scope.registerToApp = function () {
             if ($scope.validateInput($scope.email) && $scope.validateInput($scope.password) && $scope.validateInput($scope.name)) {
                 $scope.register();
@@ -119,11 +135,15 @@
                 .error(function () { alert('error'); });
         }
 
-        $scope.validateInput = function (value) {
-            return (value == undefined || value == '') ? false : true;
-        };
-
+        //login
         $scope.loginToApp = function () {
+            if ($scope.validateInput($scope.email) && $scope.validateInput($scope.password) && $scope.validateInput($scope.name)) {
+                $scope.login();
+            } else {
+                Message.showMessage($scope.langString[$scope.lang].inputVerification, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn);
+            }
+        }
+        $scope.login = function () {
             var data = {
                 email: $scope.email,
                 pw: $scope.password,
@@ -132,19 +152,19 @@
             Switcher.getSessions('userHandler', 'loginUser', data)
                 .success(function (res) {
                     switch (res[0]) {
-                        case 'loginSuccess': {
+                        case 'incorrectEmail': { Message.showMessage($scope.langString[$scope.lang].incorrectEmail, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn); } break;
+                        case 'accountInactive': { Message.showMessage($scope.langString[$scope.lang].accountInactive, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn); } break;
+                        case 'incorrectPassword': { Message.showMessage($scope.langString[$scope.lang].incorrectPassword, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn); } break;
+                        case 'incorrectName': { Message.showMessage($scope.langString[$scope.lang].incorrectName, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn); } break;
+                        default: {
                             console.log(res[0]);
-                            Message.showMessage($scope.langString[$scope.lang].registrationComplete, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn);
-                            //localStorage.setItem('userId', res.userId);
+                            Message.showMessage($scope.langString[$scope.lang].loginComplete, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn);
+                            localStorage.setItem('userId', res.userId);
                             localStorage.setItem('email', $scope.email);
                             localStorage.setItem('name', $scope.name);
                             localStorage.setItem('password', $scope.password);
                             View.changeView('settings');
                         } break;
-                        default: {
-                            
-                        } break;
-
                     }
                 })
                 .error(function () { alert('error'); });
@@ -160,7 +180,7 @@
             this.moreAlarm = alarm;
         }
     },
-    wheel: function ($scope, $interval, Switcher, Message) {
+    wheel: function ($scope, Switcher, Message) {
         $scope.lang = localStorage.getItem('lang');
         $scope.langString = {
             he: {
@@ -209,7 +229,7 @@
                 Slice1Colour: "#006",
                 Font: "Arial",
                 PegColour1: "#fff",
-               PegColour2: "#000",
+                PegColour2: "#000",
                 PointerColour1: "#fff",
                 PointerColour2: "#000",
                 CentreColour: "#903",
@@ -222,12 +242,15 @@
             myWheel.Start();
             myWheel.SetOnCompleted(function (category) {
                 console.log(category.alt);
-                $scope.selectedCategory = category.alt;
-                $scope.selectedCategoryId = category.id;
+                var link = $('#wheel').next();
+                link.attr('href', link.attr('href') + category.id);
+                link.html('<label>' + category.alt + '</label>');
             });
         }
 
-        
+        $scope.logout = function () {
+            localStorage.clear();
+        }
 
     },
     question: function ($scope, $routeParams, $interval, Switcher, View, Message) {
@@ -275,9 +298,9 @@
                     $scope.startBonusCalculation($scope.thisQuestion);
                 }
                 else {
-                    var cb = function() { View.changeView('wheel'); }
-                    Message.showMessage('אופס... אין שאלות בקטגוריה זו.', 'KeepItApp', 'אישור', cb);
-                    
+                    Message.showMessage('אופס... אין שאלות בקטגוריה זו.', 'KeepItApp', 'אישור');
+                    View.changeView('wheel');
+
                 }
 
             })

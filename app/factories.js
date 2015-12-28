@@ -16,9 +16,9 @@ var factories = {
         return this;
     },
     Message: function () {
-        this.showMessage = function (message, title, btn, cb) {
+        this.showMessage = function (message, title, btn) {
             if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
-                navigator.notification.alert(message, cb, title, btn);
+                navigator.notification.alert(message, null, title, btn);
             } else {
                 alert(message);
             }  

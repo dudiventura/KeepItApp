@@ -5,7 +5,7 @@
             <nav class="navbar navbar-default">
                 <div class="container">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">
+                        <a class="navbar-brand" ng-click="logout()" href="#/">
                             <img alt="Brand" src="assets/img/logo.png">
                         </a>
                     </div>
@@ -36,8 +36,8 @@
         </div>-->
         <div class="col-xs-12 circle-container text-center">
             <div id="wheel" ng-click="spin();"></div>
-            <a ng-href="#/question?cat={{selectedCategoryId}}" class="btn btn-primary" role="button">
-                <label ng-bind="selectedCategory"></label>
+            <a href="#/question?cat=" class="btn btn-primary" role="button">
+                <label></label>
             </a>
         </div>
     </div>
