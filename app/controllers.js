@@ -276,8 +276,8 @@
         $scope.userAnswers = [];
         $scope.timerToBonus = 0;
 
-        var data = { userId: localStorage.getItem('userId'), categoryId: $routeParams.cat, qType: 'new', lang: $scope.lang };
-        //var data = { userId: 2, categoryId: 5, qType: 'new', lang: $scope.lang }
+        //var data = { userId: localStorage.getItem('userId'), categoryId: $routeParams.cat, qType: 'new', lang: $scope.lang };
+        var data = { userId: 2, categoryId: 5, qType: 'new', lang: $scope.lang }
         console.log(data);
         Switcher.getSessions('questionHandler', 'getUserQuestionByCategory', data)
             .success(function (res) {
