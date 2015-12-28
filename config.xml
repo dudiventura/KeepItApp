@@ -36,50 +36,37 @@
   <plugin name="cordova-plugin-sim" source="npm"/>
   <plugin name="cordova-plugin-whitelist" source="npm" />
 
-  <platform name="ios">
-    <icon src="assets/iOS/Resources/icons/Icon.png" width="57" height="57" />
-    <icon src="assets/iOS/Resources/icons/Icon-72.png" width="72" height="72" />
-    <icon src="assets/iOS/Resources/icons/Icon@2x.png" width="114" height="114" />
-    <icon src="assets/iOS/Resources/icons/Icon-72@2x.png" width="144" height="144" />
-    <icon src="assets/iOS/Resources/icons/Icon-120.png" width="120" height="120" />
-    <icon src="assets/iOS/Resources/icons/Icon-152.png" width="152" height="152" />
-    <icon src="assets/iOS/Resources/icons/Icon-76.png" width="76" height="76" />
+  <icon src="assets/icons-and-splash/iOS/Resources/icons/Icon.png" />
 
-    <!--<splash src="assets/iOS/Resources/splash/Icon-76.png" width="320" height="480" />-->
+  <platform name="ios">
+    <icon src="assets/icons-and-splash/iOS/Resources/icons/Icon.png" width="57" height="57" />
+    <icon src="assets/icons-and-splash/iOS/Resources/icons/Icon-72.png" width="72" height="72" />
+    <icon src="assets/icons-and-splash/iOS/Resources/icons/Icon@2x.png" width="114" height="114" />
+    <icon src="assets/icons-and-splash/iOS/Resources/icons/Icon-72@2x.png" width="144" height="144" />
+    <icon src="assets/icons-and-splash/iOS/Resources/icons/Icon-120.png" width="120" height="120" />
+    <icon src="assets/icons-and-splash/iOS/Resources/icons/Icon-152.png" width="152" height="152" />
+    <icon src="assets/icons-and-splash/iOS/Resources/icons/Icon-76.png" width="76" height="76" />
+
+    <splash src="assets/icons-and-splash/iOS/Resources/splash/Default~iphone.png" width="320" height="480" />
+    <splash src="assets/icons-and-splash/iOS/Resources/splash/Default@2x~iphone_640x960.png" width="640" height="960" />
+    <splash src="assets/icons-and-splash/iOS/Resources/splash/Default-568h@2x~iphone_640x1136.png" width="640" height="1136" />
+    <splash src="assets/icons-and-splash/iOS/Resources/splash/Default-Portrait~ipad_768x1024.png" width="768" height="1024" />
+    <splash src="assets/icons-and-splash/iOS/Resources/splash/Default-Landscape~ipad_1024x768.png" width="1024" height="768" />
   </platform>
 
   <platform name="android">
-    <icon src="android/ldpi.png" gap:platform="android" gap:density="ldpi" />
-    <splash src="android/ldpi.png" gap:platform="android" gap:qualifier="lhdpi" />
+    <icon src="assets/icons-and-splash/android/res/drawable-ldpi/icon.png" platform="android" density="ldpi" />
+    <icon src="assets/icons-and-splash/android/res/drawable-mdpi/icon.png" platform="android" density="mdpi" />
+    <icon src="assets/icons-and-splash/android/res/drawable-hdpi/icon.png" platform="android" density="hdpi" />
+    <icon src="assets/icons-and-splash/android/res/drawable-xhdpi/icon.png" platform="android" density="xhdpi" />
+    <icon src="assets/icons-and-splash/android/res/drawable-xxhdpi/icon.png" platform="android" density="xxhdpi" />
+
+    <splash src="assets/icons-and-splash/android/res/drawable-ldpi/screen.png" platform="android" qualifier="ldpi" />
+    <splash src="assets/icons-and-splash/android/res/drawable-mdpi/screen.png" platform="android" qualifier="mdpi" />
+    <splash src="assets/icons-and-splash/android/res/drawable-hdpi/screen.png" platform="android" qualifier="hdpi" />
+    <splash src="assets/icons-and-splash/android/res/drawable-xhdpi/screen.png" platform="android" qualifier="xhdpi" />
+    <splash src="assets/icons-and-splash/android/res/drawable-xxhdpi/screen.png" platform="android" qualifier="xxhdpi" />
   </platform>
-
-  <icon src="res/icon/ios/Icon.png" />
-  <icon src="res/icon/android/drawable-ldpi/ic_launcher.png"   platform="android"    density="ldpi" />
-  <icon src="res/icon/android/drawable-mdpi/ic_launcher.png"   platform="android"    density="mdpi" />
-  <icon src="res/icon/android/drawable-hdpi/ic_launcher.png"   platform="android"    density="hdpi" />
-  <icon src="res/icon/android/drawable-xhdpi/ic_launcher.png"  platform="android"    density="xhdpi" />
-  <icon src="res/icon/android/drawable-xxhdpi/ic_launcher.png"  platform="android"    density="xxhdpi" />
-
-  <icon src="res/icon/ios/Icon.png"     platform="ios"     width="57" height="57" />
-  <icon src="res/icon/ios/Icon-72.png"  platform="ios"      width="72" height="72" />
-  <icon src="res/icon/ios/Icon@2x.png"  platform="ios"     width="114" height="114" />
-  <icon src="res/icon/ios/Icon-72@2x.png"    platform="ios"      width="144" height="144" />
-  <icon src="res/icon/ios/AppIcon.appiconset/Icon-60@2x.png"   platform="ios"   width="120" height="120" />
-  <icon src="res/icon/ios/AppIcon.appiconset/Icon-76@2x.png"   platform="ios"   width="152" height="152" />
-  <icon src="res/icon/ios/AppIcon.appiconset/Icon-76.png"    platform="ios"     width="76" height="76" />
-
-  <splash src="res/screen/android/ldpi.png"  platform="android" density="ldpi" />
-  <splash src="res/screen/android/mdpi.png"  platform="android" density="mdpi" />
-  <splash src="res/screen/android/hdpi.png"  platform="android" density="hdpi" />
-  <splash src="res/screen/android/xhdpi.png" platform="android" density="xhdpi" />
-  <splash src="res/screen/android/xxhdpi.png" platform="android" density="xxhdpi" />
-
-  <splash src="res/screen/ios/Default~iphone.png"    platform="ios"     width="320" height="480" />
-  <splash src="res/screen/ios/Default@2x.png" platform="ios"     width="640" height="960" />
-  <splash src="res/screen/ios/Default-568h@2x.png" platform="ios"     width="640" height="1136" />
-  <splash src="res/screen/ios/Default-Portrait~ipad_768x1024.png"      platform="ios"     width="768" height="1024" />
-  <splash src="res/screen/ios/Default-Landscape~ipad_1024x768.png"     platform="ios"     width="1024" height="768" />
-
 
   <access origin="*"/>
   <allow-intent href="http://*/*"/>
