@@ -189,11 +189,51 @@ label {
 }
 
 #wheel {
-width:350px;
-height:350px;
+    width: 350px;
+    height: 350px;
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
-.canvasForeground, .canvasWheel, .canvasSelector { display:none; }
+.select-catagory {
+    background-image: url('../img/1725.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    padding: 0 0 6% 0;
+}
+
+.canvasForeground, .canvasWheel, .canvasSelector {
+    display: none;
+}
+
+.dots-animation {
+    padding: 10% 0;
+    position: relative;
+    top: 1.3em;
+}
+
+.dots {
+    padding: 0.4% 2%;
+    border-radius: 50%;
+    margin: 0 0.5em;
+}
+
+.category-label {
+    display: block;
+    padding-top: 10%;
+    font-weight: bold;
+    font-size: 120%;
+}
+
+.category-link {
+    display: block;
+    font-weight: 500;
+    font-size: 110%;
+    box-shadow: 0 0 5px #888;
+}
 
 /*#endregion*/
 

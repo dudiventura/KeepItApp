@@ -27,7 +27,7 @@ THE SOFTWARE.
 var SPINWHEEL = SPINWHEEL || {};
 
 // create the closure for the instance of the object
-SPINWHEEL.wheelOfDestiny = (function (targetId, list, customTheme) {
+SPINWHEEL.wheelOfDestiny = (function (targetId, list, customTheme, centerSize) {
     // canvas layers array, properties get populated as they are dynamically created
     var canvases = [{ "name": 'canvasMain' }, { "name": 'canvasWheel' }, { "name": 'canvasForeground' }, { "name": 'canvasSelector' }];
     var fps = 14; // anything faster than 14 is unnoticable
@@ -121,19 +121,18 @@ SPINWHEEL.wheelOfDestiny = (function (targetId, list, customTheme) {
             wheel.context.translate(appRadius, appRadius);
             wheel.context.rotate(deg2Rad(90 - (sliceSize * i)));
             wheel.context.translate(0 - (appRadius), 0 - (appRadius));
-            if (i % 2) fillStyle = theme.Colour1;
-            else fillStyle = theme.Colour2;
-            if (i === 0 && theme.Slice1Colour) fillStyle = theme.Slice1Colour;
+            //if (i % 2) fillStyle = theme.Colour1;
+            //else fillStyle = theme.Colour2;
+            //if (i === 0 && theme.Slice1Colour) fillStyle = theme.Slice1Colour;
+            fillStyle = list[i].color;
             drawPieSlice(wheel.context, appRadius, appRadius, wheelRadius - (wheelRadius / 50), 180 - (sliceSize / 2), 180 + (sliceSize / 2), false, fillStyle, true);
             wheel.context.save();
             if (i % 2) fillStyle = theme.FontColour1;
             else fillStyle = theme.FontColour2;
             wheel.context.fillStyle = fillStyle;
-            //wheel.context.drawImage(list[i], (appRadius - wheelRadius) * 2, appRadius, ((appRadius - wheelRadius) * 6));
             if (typeof (list[i]) === 'object') {
-                wheel.context.drawImage(list[i], (appRadius - wheelRadius) * 2, appRadius, 20, 20);
+                wheel.context.drawImage(list[i], (appRadius - wheelRadius) * 2, appRadius, list[i].width, list[i].height);
             }
-            
             wheel.context.restore();
             wheel.context.restore();
         }
@@ -144,13 +143,11 @@ SPINWHEEL.wheelOfDestiny = (function (targetId, list, customTheme) {
             wheel.context.rotate(deg2Rad((sliceSize / 2) + (sliceSize * i)));
             wheel.context.translate(0 - (appRadius), 0 - (appRadius));
             // draw the pegs
-            drawEllipse(wheel.context, appRadius, pegSize * 5, pegSize, pegSize, theme.PegColour1, false);
-            drawEllipse(wheel.context, appRadius, pegSize * 5, pegSize - 2, pegSize - 2, theme.PegColour2, true);
+            //drawEllipse(wheel.context, appRadius, pegSize * 5, pegSize, pegSize, theme.PegColour1, false);
+            //drawEllipse(wheel.context, appRadius, pegSize * 5, pegSize - 2, pegSize - 2, theme.PegColour2, true);
             wheel.context.restore();
         }
     };
-
-
 
     // Animation drawing
     var animateWheel = function () {
@@ -338,12 +335,12 @@ SPINWHEEL.wheelOfDestiny = (function (targetId, list, customTheme) {
         var fore = getCanvas('canvasForeground');
         clearCanvasBlank(fore.canvas, fore.context);
         // draw the centre
-        var factor = 15;
+        var factor = centerSize;
         drawEllipse(fore.context, appRadius, appRadius, wheelRadius / factor, wheelRadius / factor, theme.CentreColour);
         fore.context.save();
         fore.context.translate(appRadius, 5);
         fore.context.rotate(deg2Rad(bentAngle));
-        drawSpike(fore.context, 0, pegSize, pegSize, 0, pegSize * 6, -pegSize, pegSize, theme.PointerColour1);
+        //drawSpike(fore.context, 0, pegSize, pegSize, 0, pegSize * 6, -pegSize, pegSize, theme.PointerColour1);
         fore.context.restore();
     }
 
@@ -368,9 +365,9 @@ SPINWHEEL.wheelOfDestiny = (function (targetId, list, customTheme) {
     var drawPieSlice = function (context, cx, cy, radius, startAngle, endAngle, clockwise, style, fill) {
         context.save();
         context.beginPath();
-        context.moveTo(cx, cy);
+        context.moveTo(cx-7, cy-7);
         context.arc(cx, cy, radius, deg2Rad(startAngle), deg2Rad(endAngle), clockwise);
-        context.lineTo(cx, cy);
+        context.lineTo(cx-7, cy-7);
         if (fill) {
             context.fillStyle = style;
             context.fill();

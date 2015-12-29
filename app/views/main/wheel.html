@@ -22,23 +22,20 @@
     </div>
 
     <div class="row" ng-class="(lang == 'he')?'rtl':''">
-        <!--<div class="col-sm-6 col-md-4" ng-repeat="category in categoriesList track by category.id">
-            <div class="thumbnail" style="background-color:{{category.color}} !important;">
-                <img src="{{category.icon}}">
-                <div class="caption">
-                    <h3 ng-bind="(lang == 'he')? category.title_he : category.title_en"></h3>
-                    <p>{{category.id}}</p>
-                    <p>
-                        <a href="#/question?cat={{category.id}}" class="btn btn-primary" role="button">בחר שאלה</a>
-                    </p>
-                </div>
-            </div>
-        </div>-->
         <div class="col-xs-12 circle-container text-center">
             <div id="wheel" ng-click="spin();"></div>
-            <a href="#/question?cat=" class="btn btn-primary" role="button">
-                <label></label>
-            </a>
+        </div>
+    </div>
+
+    <div class="row select-catagory" ng-class="(lang == 'he')?'rtl':''" ng-show="isSpinning">
+        <div class="col-xs-12 text-center">
+            <div class="dots-animation" ng-show="showDots">
+                <span ng-repeat="category in categoriesList" class="dots dot_{{$index}}" style="background-color:{{category.color}};"></span>
+            </div>
+            <div ng-show="!showDots">
+                <label class="category-label" style="color:{{selectedCategoryColor}}">{{selectedCategory}}</label>
+                <a href="#/question?cat={{selectedCategoryId}}" style="color:#fff;background-color:{{selectedCategoryColor}}" class="btn category-link">תן לי לפתור בעיה</a>
+            </div>
         </div>
     </div>
 </div>

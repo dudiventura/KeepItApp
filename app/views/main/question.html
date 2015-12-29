@@ -12,7 +12,7 @@
                                 <span class="credit" ng-class="(thisQuestion.credits >= 10) ? 'bigger10': null">{{thisQuestion.credits}}</span>
                             </div>
                             <div class="col-xs-6 grey-bg icon-holder text-center">
-                                <img src="assets/img/8793.png" data-ng-click="showHidePopup('bonus');">
+                                <img src="assets/img/8793.png">
                                 <span class="bonus" ng-class="(thisQuestion.bonus > 10) ? 'bigger10': null" ng-bind="thisQuestion.bonus"></span>
                             </div>
                         </div>
@@ -72,9 +72,9 @@
 
 </div>
 
-<div class="popup-overlay" data-ng-show="showPopup" data-ng-click="showHidePopup();">
+<div class="popup-overlay" ng-show="showPopup" ng-click="showHidePopup();">
 
-    <div class="popup-bonus popup-bg-message" data-ng-show="bonus">
+    <div class="popup-bonus popup-bg-message" ng-show="bonus">
         <p class="rtl">
             זה בונוס.<br />
             אם תענה על התשובה
@@ -85,14 +85,14 @@
         <button>הבנתי</button>
     </div>
 
-    <div class="popup-answer popup-bg-general" data-ng-show="general">
+    <div class="popup-answer popup-bg-general" ng-show="general">
         <p class="rtl text-center">
             <span>{{blessing}}</span>
             <span>{{answerText}}</span>
             <span class="orange-text">{{points}}</span>
         </p>
         <button data-ng-hide="wrong">Keep it up!</button>
-        <p class="rtl text-right wrong" data-ng-hide="!wrong">
+        <p class="rtl text-right wrong" ng-hide="!wrong">
             אל תדאג, אתה תקבל<br />
             הזדמנות נוספת לזכות בנקודות
         </p>

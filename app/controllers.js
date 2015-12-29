@@ -196,6 +196,13 @@
         $scope.categoriesList = [];
         $scope.selectedCategory = '';
         $scope.selectedCategoryId = 0;
+        $scope.selectedCategoryColor = '';
+        $scope.imageWidth = 35;
+        $scope.imageHeight = 35;
+        $scope.isSpinning = false;
+        $scope.showDots = false;
+
+
         var data = { userId: localStorage.getItem('userId'), lang: $scope.lang }
         console.log(data);
         Switcher.getSessions('questionHandler', 'getUserCategories', data)
@@ -211,40 +218,52 @@
             for (var i = 0; i < data.length; i++) {
                 var img = new Image();
                 img.id = data[i].id;
+                img.src = data[i].icon;
+                img.color = data[i].color;
+                img.width = $scope.imageWidth;
+                img.height = $scope.imageHeight;
                 if (localStorage.getItem('lang') == 'he') {
                     img.alt = data[i].title_he;
                 } else {
                     img.alt = data[i].title_en;
                 }
-                img.src = data[i].icon;
+                
                 images.push(img);
             }
-            myWheel = SPINWHEEL.wheelOfDestiny('wheel', images);
-            myWheel.SetTheme({
+
+            var theme = {
                 Colour1: '#ff0',
                 Colour2: '#000',
-                WheelColour: "#fff",
+                WheelColour: 'transparent',
                 FontColour1: "#000",
                 FontColour2: "#ff0",
                 Slice1Colour: "#006",
-                Font: "Arial",
+                Font: "FbOxford-Regular",
                 PegColour1: "#fff",
                 PegColour2: "#000",
                 PointerColour1: "#fff",
                 PointerColour2: "#000",
-                CentreColour: "#903",
+                CentreColour: '#f4eae0',
                 HighlightColour: 'transparent',
                 SliceText: ""
-            });
+            }
+
+            myWheel = SPINWHEEL.wheelOfDestiny('wheel', images, theme, 3);
         }
 
         $scope.spin = function () {
             myWheel.Start();
+            $scope.isSpinning = true;
+            $scope.showDots = true;
             myWheel.SetOnCompleted(function (category) {
-                console.log(category.alt);
-                var link = $('#wheel').next();
-                link.attr('href', link.attr('href') + category.id);
-                link.html('<label>' + category.alt + '</label>');
+                $scope.$apply(function () {
+                    console.log(category.alt);
+                    $scope.showDots = false;
+                    $scope.selectedCategory = category.alt;
+                    $scope.selectedCategoryId = category.id;
+                    $scope.selectedCategoryColor = category.color;
+                    console.log($scope.selectedCategory + ' ' + $scope.selectedCategoryId + ' ' + $scope.selectedCategoryColor);
+                }); 
             });
         }
 
@@ -276,8 +295,8 @@
         $scope.userAnswers = [];
         $scope.timerToBonus = 0;
 
-        //var data = { userId: localStorage.getItem('userId'), categoryId: $routeParams.cat, qType: 'new', lang: $scope.lang };
-        var data = { userId: 2, categoryId: 5, qType: 'new', lang: $scope.lang }
+        var data = { userId: localStorage.getItem('userId'), categoryId: $routeParams.cat, qType: 'new', lang: $scope.lang };
+        //var data = { userId: 2, categoryId: 5, qType: 'new', lang: $scope.lang }
         console.log(data);
         Switcher.getSessions('questionHandler', 'getUserQuestionByCategory', data)
             .success(function (res) {
@@ -329,7 +348,7 @@
             var startBonus = function () {
                 console.log('startBonus');
                 var count = 0;
-                var bonusCounting = $interval(function () {
+                bonusCounting = $interval(function () {
                     if ($scope.thisQuestion.bonus > 0 && count == 6) {
                         $scope.thisQuestion.bonus = Math.floor($scope.thisQuestion.bonus * 0.9);
                         count = 0;
@@ -378,18 +397,23 @@
                         ($scope.thisQuestion.answerDesc.indexOf(userAnswers[i]) != -1) ? c++ : null;
                     }
 
+                    $interval.cancel(bonusCounting);
+
                     if (c == $scope.count) { // all the answers are current
                         $scope.blessing = 'מעולה!';
                         $scope.answerText = 'הרווחת הרגע';
                         $scope.points = '150 נקודות';
                         $scope.wrong = false;
                         $scope.showHidePopup('general');
+                        
+
                     } else {
                         $scope.blessing = 'התשובות הנכונות הן: ';
                         $scope.answerText = '';
                         $scope.points = $scope.thisQuestion.answerDesc;
                         $scope.wrong = true;
                         $scope.showHidePopup('general');
+                        $scope.thisQuestion.bonus = 0;
                     }
 
                 } else {
