@@ -183,14 +183,9 @@ label {
     width: 80%;
 }
 
-.go-to-question {
-    position: relative;
-    top: 19em;
-}
-
 #wheel {
-    width: 350px;
-    height: 350px;
+    width: 310px;
+    height: 310px;
     -moz-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
     -o-transform: rotate(180deg);
