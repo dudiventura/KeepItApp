@@ -15,8 +15,14 @@ label {
     font-weight: normal;
 }
 
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
 [ng-view] {
-    height: 130%;
+    height: 100%;
 }
 
 [alt="logo"] {
@@ -234,8 +240,12 @@ label {
 
 /*#region Question Page*/
 
+[ng-class="question"] {
+    margin-bottom: 22%;
+}
+
 .icon-holder {
-    padding: 7%;
+    padding: 18%;
 }
 
     .icon-holder:last-child {
@@ -245,11 +255,15 @@ label {
 
     .icon-holder img {
         width: 75%;
+        position: absolute;
+        left: 0.2em;
+        top: 0.2em;
     }
 
 .question-type {
     float: right;
     width: 45%;
+    padding: 10px 12%;
 }
 
 .question {
@@ -280,7 +294,6 @@ label {
     }
 
     .answer:hover {
-        background-color: #D22329;
         color: #fff;
     }
 
@@ -315,6 +328,13 @@ label {
 .credit, .bonus {
     color: #fff;
     position: absolute;
+    background-color: #5E5E5E;
+    border-radius: 50%;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    padding-top: 0.4em;
+    top: 30%;
 }
 
 /*#endregion*/

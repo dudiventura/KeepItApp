@@ -11,7 +11,7 @@ var factories = {
     },
     View: function ($location) {
         this.changeView = function (view) {
-            $location.path(view);
+            $location.url(view);
         }
         return this;
     },

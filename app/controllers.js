@@ -157,9 +157,10 @@
                         case 'incorrectPassword': { Message.showMessage($scope.langString[$scope.lang].incorrectPassword, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn); } break;
                         case 'incorrectName': { Message.showMessage($scope.langString[$scope.lang].incorrectName, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn); } break;
                         default: {
-                            console.log(res[0]);
+                            console.log(res);
                             Message.showMessage($scope.langString[$scope.lang].loginComplete, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn);
                             localStorage.setItem('userId', res.userId);
+                            localStorage.setItem('totalCredits', (res.totalCredits == null) ? 0 : parseInt(res.totalCredits));
                             localStorage.setItem('email', $scope.email);
                             localStorage.setItem('name', $scope.name);
                             localStorage.setItem('password', $scope.password);
@@ -197,6 +198,7 @@
         $scope.selectedCategory = '';
         $scope.selectedCategoryId = 0;
         $scope.selectedCategoryColor = '';
+        $scope.selectedCategoryIcon = ''
         $scope.imageWidth = 35;
         $scope.imageHeight = 35;
         $scope.isSpinning = false;
@@ -205,7 +207,7 @@
 
         var data = { userId: localStorage.getItem('userId'), lang: $scope.lang }
         console.log(data);
-        Switcher.getSessions('questionHandler', 'getUserCategories', data)
+        Switcher.getSessions('categoryHandler', 'getUserCategories', data)
             .success(function (res) {
                 console.log('getUserCategories', res);
                 $scope.categoriesList = res;
@@ -262,6 +264,7 @@
                     $scope.selectedCategory = category.alt;
                     $scope.selectedCategoryId = category.id;
                     $scope.selectedCategoryColor = category.color;
+                    $scope.selectedCategoryIcon = category.src;
                     console.log($scope.selectedCategory + ' ' + $scope.selectedCategoryId + ' ' + $scope.selectedCategoryColor);
                 }); 
             });
@@ -273,12 +276,16 @@
 
     },
     question: function ($scope, $routeParams, $interval, Switcher, View, Message) {
-        console.log($routeParams);
+        console.log('$',$routeParams);
         $scope.lang = localStorage.getItem('lang');
         $scope.pageClass = 'question';
         $scope.bgClass = 'intro-bg';
+        $scope.catId = $routeParams.catId;
+        $scope.catIcon = $routeParams.catIcon;
+        $scope.catColor = $routeParams.catColor;
         $scope.showPopup = (localStorage.getItem('showIntro') == undefined) ? true : false;
-        $scope.bonus = (localStorage.getItem('showIntro') == undefined) ? true : false;;
+        $scope.bonus = (localStorage.getItem('showIntro') == undefined) ? true : false;
+        $scope.bonusCounting;
         $scope.general = false;
         $scope.blessing = '';
         $scope.answerText = '';
@@ -292,11 +299,12 @@
         $scope.answersIds = [];
         $scope.answerDesc = [];
         $scope.count = 0;
-        $scope.userAnswers = [];
+        $scope.userAnswers = new Array();
+        $scope.usersAnswersIds = new Array();
         $scope.timerToBonus = 0;
 
-        var data = { userId: localStorage.getItem('userId'), categoryId: $routeParams.cat, qType: 'new', lang: $scope.lang };
-        //var data = { userId: 2, categoryId: 5, qType: 'new', lang: $scope.lang }
+        var data = { userId: localStorage.getItem('userId'), categoryId: $scope.catId, qType: 'new', lang: $scope.lang };
+
         console.log(data);
         Switcher.getSessions('questionHandler', 'getUserQuestionByCategory', data)
             .success(function (res) {
@@ -315,6 +323,8 @@
                     $scope.answerDesc = res.questionOptions.split(',');
 
                     $scope.startBonusCalculation($scope.thisQuestion);
+
+                    $scope.googleSearch();
                 }
                 else {
                     Message.showMessage('אופס... אין שאלות בקטגוריה זו.', 'KeepItApp', 'אישור');
@@ -324,6 +334,17 @@
 
             })
             .error(function (e) { $scope.categoriesList = []; });
+
+        $scope.googleSearch = function () {
+            var cx = '002673862978533558277:eqqp2uqxpmm';
+            var gcse = document.createElement('script');
+            gcse.type = 'text/javascript';
+            gcse.async = true;
+            gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                '//cse.google.com/cse.js?cx=' + cx;
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(gcse, s);
+        }
 
         $scope.startBonusCalculation = function (res) {
             if (res.answerDesc.split(',').length + res.questionDesc.split(' ').length <= 10) {
@@ -348,9 +369,10 @@
             var startBonus = function () {
                 console.log('startBonus');
                 var count = 0;
-                bonusCounting = $interval(function () {
+                $scope.bonusCounting = $interval(function () {
                     if ($scope.thisQuestion.bonus > 0 && count == 6) {
-                        $scope.thisQuestion.bonus = Math.floor($scope.thisQuestion.bonus * 0.9);
+                        var b = $scope.thisQuestion.bonus * 0.9;
+                        $scope.thisQuestion.bonus = b.toFixed(1);
                         count = 0;
                     } else {
                         if (count < 6) {
@@ -361,7 +383,7 @@
 
                         if ($scope.thisQuestion.bonus <= 0) {
                             $scope.thisQuestion.bonus = 0;
-                            $interval.cancel(bonusCounting);
+                            $interval.cancel($scope.bonusCounting);
                         }
                     }
                 }, 1000);
@@ -383,7 +405,49 @@
             }
         }
 
+        $scope.checkMultiAnswer = function (ans, id) {
+            if ($scope.count < $scope.thisQuestion.numCorrectAnswers * 1) {
+                if ($.inArray(id + '-' + ans, $scope.userAnswers) != -1) { //in the array
+                    $('[data-id="' + id + '"]').prev('input').prop('checked', false);
+                    $scope.userAnswers = $.grep($scope.userAnswers, function (value) { return value != id + '-' + ans });
+                    $scope.usersAnswersIds = $.grep($scope.usersAnswersIds, function (value) { return value != id.split('_')[1] });
+                    $scope.count--;
+                }
+                else { //not in the array
+                    $scope.count++;
+                    $scope.userAnswers.push(id + '-' + ans);
+                    $scope.usersAnswersIds.push(id.split('_')[1]);
+                    $('[data-id="' + id + '"]').prev('input').prop('checked', true);
+                }
+            } else {
+                if ($.inArray(id + '-' + ans, $scope.userAnswers) != -1) {
+                    $('[data-id="' + id + '"]').prev('input').prop('checked', false);
+                    $scope.userAnswers = $.grep($scope.userAnswers, function (value) { return value != id + '-' + ans });
+                    $scope.usersAnswersIds = $.grep($scope.usersAnswersIds, function (value) { return value != id.split('_')[1] });
+                    $scope.count--;
+                }
+                else {
+                    alert('לא ניתן לבחור יותר');
+                    $('[data-id="' + id + '"]').prev('input').prop('checked', false);
+                }
+            }
+        }
+
+        $scope.checkOneAnswer = function (id) {
+            var n = $('[data-id="' + id + '"]').prev('input').attr('name');
+            $('radio[name="' + n + '"]').prop('checked',false);
+            $('[data-id="' + id + '"]').prev('input').prop('checked', true);
+            var ans = $('[data-id="' + id + '"]').prev('input').attr('data-answer');
+            $scope.userAnswers = new Array();
+            $scope.userAnswers.push(ans);
+            $scope.usersAnswersIds = new Array();
+            $scope.usersAnswersIds.push(id.split('_')[1]);
+        }
+
         $scope.checkAnswer = function () {
+            //stop the bonus
+            $interval.cancel($scope.bonusCounting);
+
             if ($scope.multipleAnswers) {
                 if ($scope.thisQuestion.numCorrectAnswers * 1 == $scope.count) {//check if all the answers are checked
                     //get the users answers
@@ -397,71 +461,73 @@
                         ($scope.thisQuestion.answerDesc.indexOf(userAnswers[i]) != -1) ? c++ : null;
                     }
 
-                    $interval.cancel(bonusCounting);
-
-                    if (c == $scope.count) { // all the answers are current
-                        $scope.blessing = 'מעולה!';
-                        $scope.answerText = 'הרווחת הרגע';
-                        $scope.points = '150 נקודות';
-                        $scope.wrong = false;
-                        $scope.showHidePopup('general');
-                        
-
-                    } else {
-                        $scope.blessing = 'התשובות הנכונות הן: ';
-                        $scope.answerText = '';
-                        $scope.points = $scope.thisQuestion.answerDesc;
-                        $scope.wrong = true;
-                        $scope.showHidePopup('general');
-                        $scope.thisQuestion.bonus = 0;
-                    }
+                    (c == $scope.count) ? $scope.showCorrectPopup() : $scope.showIncorrectPopup();
 
                 } else {
                     alert('לא בחרת את כל התשובות האפשריות');
                 }
-
-
-
             }
-            //if (ansNum == $scope.answersIds[($scope.thisQuestion.answerId*1) -1]) {
-            //    $scope.blessing = 'מעולה!';
-            //    $scope.answerText = 'הרווחת הרגע';
-            //    $scope.points = '150 נקודות';
-            //    $scope.wrong = false;
-            //    $scope.showHidePopup('general');
-            //} else {
-            //    $scope.blessing = 'התשובה הנכונה היא:';
-            //    $scope.answerText = '';
-            //    $scope.points = ($scope.thisQuestion.answerId * 1) + '. ' + $scope.thisQuestion.answerDesc;
-            //    $scope.wrong = true;
-            //    $scope.showHidePopup('general');
-            //}
-        }
-
-        $scope.checkMultiAnswer = function (ans, id) {
-            if ($scope.count < $scope.thisQuestion.numCorrectAnswers * 1) {
-                if ($.inArray(id + '-' + ans, $scope.userAnswers) != -1) { //in the array
-                    $('[data-id="' + id + '"]').prev('input').prop('checked', false);
-                    $scope.userAnswers = $.grep($scope.userAnswers, function (value) { return value != id + '-' + ans });
-                    $scope.count--;
-                }
-                else { //not in the array
-                    $scope.count++;
-                    $scope.userAnswers.push(id + '-' + ans);
-                    $('[data-id="' + id + '"]').prev('input').prop('checked', true);
-                }
-            } else {
-                if ($.inArray(id + '-' + ans, $scope.userAnswers) != -1) {
-                    $('[data-id="' + id + '"]').prev('input').prop('checked', false);
-                    $scope.userAnswers = $.grep($scope.userAnswers, function (value) { return value != id + '-' + ans });
-                    $scope.count--;
-                }
-                else {
-                    alert('לא ניתן לבחור יותר');
-                    $('[data-id="' + id + '"]').prev('input').prop('checked', false);
+            if ($scope.oneAnswer) {
+                if ($scope.thisQuestion.answerDesc.indexOf($scope.userAnswers[0]) != -1) {
+                    $scope.showCorrectPopup();
+                } else {
+                    $scope.showIncorrectPopup();
                 }
             }
         }
+
+        $scope.showCorrectPopup = function () {
+            var credits = $scope.calcCredits($scope.thisQuestion.credits, $scope.thisQuestion.bonus);
+            $scope.blessing = 'מעולה!';
+            $scope.answerText = 'הרווחת הרגע';
+            $scope.points = 'נקודות ' + credits
+            $scope.wrong = false;
+            $scope.showHidePopup('general');
+            for (var i = 0; i < $scope.userAnswers.length; i++) {
+                $scope.userAnswers[i] = $scope.userAnswers[i].split('-')[1];
+            }
+            $scope.sendAnswer($scope.thisQuestion.questionId, $scope.userAnswers.join(), $scope.usersAnswersIds.join(), 1, $scope.thisQuestion.difficulty, credits);
+        }
+
+        $scope.showIncorrectPopup = function () {
+            $scope.blessing = 'התשובות הנכונות הן: ';
+            $scope.answerText = '';
+            $scope.points = $scope.thisQuestion.answerDesc;
+            $scope.wrong = true;
+            $scope.showHidePopup('general');
+            $scope.thisQuestion.bonus = 0;
+            for (var i = 0; i < $scope.userAnswers.length; i++) {
+                $scope.userAnswers[i] = $scope.userAnswers[i].split('-')[1];
+            }
+            $scope.sendAnswer($scope.thisQuestion.questionId, $scope.userAnswers.join(), $scope.usersAnswersIds.join(), 0, $scope.thisQuestion.difficulty, 0);
+        }
+
+        $scope.calcCredits = function (n1, n2) {
+            return (n1 * 1) + (n2 * 1);
+        }
+
+        $scope.sendAnswer = function (qId, answerDesc, optionId, correct, difficulty, credits) {
+            var data = {
+                userId: localStorage.getItem('userId'),
+                questionId: qId,
+                answerDesc: answerDesc,
+                optionId: optionId,
+                correct: correct,
+                difficulty: difficulty,
+                credits: credits,
+                lang: $scope.lang
+            }
+            console.log(data);
+            Switcher.getSessions('answerHandler', 'setUserAnswer', data)
+            .success(function (res) {
+                $scope.$apply();
+            })
+            .error(function (e) { });
+        }
+    },
+
+    newQuestion: function ($scope, $routeParams, $interval, Switcher, View, Message) {
+        
     }
 };
 

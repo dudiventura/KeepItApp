@@ -141,3 +141,19 @@ input[type=checkbox].multiple:checked + label {
 }
 
 /*#endregion*/
+
+/*#region One Answer*/
+
+input[type="radio"].one-answer {
+    display: none;
+}
+
+input[type="radio"].one-answer + label {
+    background-color:transparent;
+}
+
+input[type="radio"].one-answer:checked + label {
+    background-color: rgba(129, 128, 126, 0.65);
+}
+
+/*#endregion*/

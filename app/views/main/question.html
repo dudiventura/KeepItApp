@@ -1,4 +1,10 @@
 ﻿
+<style>
+    .answer:hover {
+    background-color:{{catColor}};
+    }
+</style>
+
 <div class="container white-bg fill" ng-class="{{pageClass}}">
 
     <div class="row white-bg">
@@ -8,7 +14,7 @@
                     <div class="navbar-header">
                         <div class="col-xs-6">
                             <div class="col-xs-6 grey-bg icon-holder text-center">
-                                <img src="assets/img/8792.png"> 
+                                <img src="assets/img/8792.png">
                                 <span class="credit" ng-class="(thisQuestion.credits >= 10) ? 'bigger10': null">{{thisQuestion.credits}}</span>
                             </div>
                             <div class="col-xs-6 grey-bg icon-holder text-center">
@@ -17,7 +23,7 @@
                             </div>
                         </div>
                         <div class="col-xs-6">
-                            <img class="question-type" src="assets/img/questionType.png" />
+                            <img class="question-type" src="{{catIcon}}" style="background-color:{{catColor}}" />
                         </div>
                     </div>
                 </div>
@@ -36,13 +42,15 @@
             <!--multi-->
             <ul class="answers list-decimal" ng-class="(lang == 'he') ? 'rtl': ''" ng-show="multipleAnswers">
                 <li class="answer" ng-repeat="answer in answerDesc">
-                    <input type="checkbox" name="{{answer}}" class="multiple"/><label for="{{answer}}" data-id="multi_{{answersIds[$index]}}" ng-click="checkMultiAnswer(answer, 'multi_'+answersIds[$index])">{{$index + 1}}. {{answer}}</label>
+                    <input type="checkbox" name="{{answer}}" class="multiple" /><label for="{{answer}}" data-id="multi_{{answersIds[$index]}}" ng-click="checkMultiAnswer(answer, 'multi_'+answersIds[$index])">{{$index + 1}}. {{answer}}</label>
                 </li>
             </ul>
 
             <!--one answer-->
             <ul class="answers list-decimal" ng-class="(lang == 'he') ? 'rtl': ''" ng-show="oneAnswer">
-                <li class="answer" ng-repeat="answer in answersIds" ng-click="checkAnswer(answer)">{{$index + 1}}. {{answerDesc[$index]}}</li>
+                <li class="answer" ng-repeat="answer in answerDesc">
+                    <input type="radio" name="one-answer" class="one-answer" data-answer="{{answer}}" /><label data-id="one_{{answersIds[$index]}}" ng-click="checkOneAnswer('one_'+answersIds[$index])">{{$index + 1}}. {{answer}}</label>
+                </li>
             </ul>
 
             <!--yes no-->
@@ -57,20 +65,30 @@
         </div>
     </div>
 
-    <div class="row actions">
-        <div class="col-xs-12">
-            <div class="helpers text-right">
-                <img src="assets/img/alram.png" />
-                <img src="assets/img/megnifer.png" />
-                <img src="assets/img/safe weel.png" />
+    <!--<div new-question></div>-->
+
+</div>
+
+<footer>
+    <div class="container white-bg">
+        <div class="row actions">
+            <div class="col-xs-12">
+                <div class="helpers text-right">
+                    <img src="assets/img/alram.png" />
+                    <img src="assets/img/megnifer.png" />
+                    <img src="assets/img/safe weel.png" />
+                </div>
+                <div class="ok">
+                    <button ng-click="checkAnswer()">ok</button>
+                </div>
             </div>
-            <div class="ok">
-                <button ng-click="checkAnswer()">ok</button>
+            <div class="col-xs-12">
+                <gcse:searchbox></gcse:searchbox>
+                <gcse:searchresults></gcse:searchresults>
             </div>
         </div>
     </div>
-
-</div>
+</footer>
 
 <div class="popup-overlay" ng-show="showPopup" ng-click="showHidePopup();">
 
