@@ -44,7 +44,8 @@ var app = {
         }, 500);
     },
     isMobile: function () {
-        (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) ? true : false;
+        alert('isMobile');
+        return (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) ? true : false;
     }
 }
 
