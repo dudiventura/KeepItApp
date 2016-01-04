@@ -376,7 +376,7 @@ input.gsc-search-button {
     box-shadow: none !important;
 }
 
-::-webkit-input-placeholder {
+.gsib_a > input::-webkit-input-placeholder {
     text-align: left;
     line-height: 1.7em;
     font-family: 'ProductSans-Regular';

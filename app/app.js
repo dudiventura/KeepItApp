@@ -4,9 +4,11 @@ var app = {
         keepItApp = angular.module('keepItApp', ['ngRoute', 'ngAnimate', 'ui.bootstrap', 'angular-loading-bar']);
 
         if (app.isMobile()) {
+            alert('if')
             document.addEventListener('deviceready', app.onDeviceReady, false);
         }
         else {
+            alert('else');
             app.onDeviceReady();
         }
     },
@@ -17,7 +19,7 @@ var app = {
             app.getPhoneLanguage();
             app.getPhoneNumber();
         }
-        app.startApp();
+        //app.startApp();
     },
     getPhoneLanguage: function () {
         alert('getPhoneLanguage');
