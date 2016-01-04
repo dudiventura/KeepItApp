@@ -21,6 +21,10 @@
             left: 1.9em;
             top: 1.1em;
         }
+
+    .answers {
+        height: 315px;
+    }
 }
 
 /* Landscape */

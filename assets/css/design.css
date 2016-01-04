@@ -6,9 +6,14 @@
     src: url('../fonts/FbOxford-Regular.otf') format('opentype');
 }
 
+@font-face {
+    font-family: 'ProductSans-Regular';
+    src: url('../fonts/ProductSans-Regular.ttf') format('truetype');
+}
+
 html, body {
     height: 100%;
-    font-family: 'FbOxford-Regular', calibri !important;
+    font-family: 'FbOxford-Regular', Calibri !important;
 }
 
 label {
@@ -242,6 +247,7 @@ footer {
 
 [ng-class="question"] {
     margin-bottom: 22%;
+    padding-bottom: 1%;
 }
 
 .icon-holder {
@@ -352,18 +358,28 @@ input.gsc-search-button {
     background-color: transparent !important;
 }
 
-.gsc-input, .gsc-input-box,.gsib_a > input  {
+.gsc-input, .gsc-input-box, .gsib_a > input {
     background: #dcd5cc !important;
-    border:none !important;
+    border: none !important;
 }
 
 .gsib_a {
-   padding:0 !important;
+    padding: 0 !important;
 }
 
+    .gsib_a > input {
+        font-family:'FbOxford-Regular', Calibri;
+    }
+
 .gsc-search-box .gsc-input > input:hover, .gsc-input-box-hover {
-    border:none !important;
-    box-shadow:none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+::-webkit-input-placeholder {
+    text-align: left;
+    line-height: 1.7em;
+    font-family: 'ProductSans-Regular';
 }
 
 /*#endregion*/

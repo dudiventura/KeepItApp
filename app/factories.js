@@ -24,6 +24,37 @@ var factories = {
             }  
         }
         return this;
+    },
+    Snooze: function () {
+        this.addSnooze = function () { //title,text,firstAt,every,sound,icon,data
+            self = this;
+            var id = (localStorage.getItem('snoozeIds') == undefined) ? 1 : self.getLastId();
+
+            cordova.plugins.notification.local.schedule({
+                id: id,
+                title: "Production Jour fixe",
+                text: "Duration 1h",
+                firstAt: monday_9_am,
+                every: "week",
+                sound: "file://sounds/reminder.mp3",
+                icon: "http://icons.com/?cal_id=1",
+                data: { meetingId: "123#fg8" }
+            });
+
+            cordova.plugins.notification.local.on("click", function (notification) {
+                alert(notification.data.meetingId);
+            });
+        }
+
+        this.getLastId = function () {
+            var ids = localStorage.getItem('snoozeIds').split(',');
+            var lastId = ids[ids.length - 1];
+            ids.push((lastId * 1) + 1);
+            localStorage.set('snoozeIds', ids.join());
+            return lastId;
+        }
+
+        return this;
     }
 };
 

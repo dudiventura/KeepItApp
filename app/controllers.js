@@ -47,7 +47,7 @@
             View.changeView('wheel');
         }
     },
-    register: function ($scope, View, Switcher, Message) {
+    register: function ($scope, View, Switcher, Message, Snooze) {
         $scope.lang = localStorage.getItem('lang');
         $scope.langString = {
             he: {
@@ -67,7 +67,7 @@
                 incorrectPassword: 'סיסמה לא נכונה',
                 accountInactive: 'משתמש חסום',
                 incorrectEmail: 'כתובת מייל לא נכונה',
-                loginComplete:'התחברת בהצלחה'
+                loginComplete: 'התחברת בהצלחה'
 
             },
             en: {
@@ -149,7 +149,7 @@
                 pw: $scope.password,
                 fName: $scope.name
             };
-            Switcher.getSessions('userHandler', 'loginUser', data)
+            Switcher.getSessions('userHandler', 'appLoginUser', data)
                 .success(function (res) {
                     switch (res[0]) {
                         case 'incorrectEmail': { Message.showMessage($scope.langString[$scope.lang].incorrectEmail, $scope.langString[$scope.lang].messageTitle, $scope.langString[$scope.lang].btn); } break;
@@ -170,6 +170,8 @@
                 })
                 .error(function () { alert('error'); });
         }
+
+        Snooze.addSnooze();
     },
     settings: function ($scope) {
         $scope.setAlarm = false;
@@ -229,7 +231,7 @@
                 } else {
                     img.alt = data[i].title_en;
                 }
-                
+
                 images.push(img);
             }
 
@@ -266,7 +268,7 @@
                     $scope.selectedCategoryColor = category.color;
                     $scope.selectedCategoryIcon = category.src;
                     console.log($scope.selectedCategory + ' ' + $scope.selectedCategoryId + ' ' + $scope.selectedCategoryColor);
-                }); 
+                });
             });
         }
 
@@ -276,7 +278,7 @@
 
     },
     question: function ($scope, $routeParams, $interval, Switcher, View, Message) {
-        console.log('$',$routeParams);
+        console.log('$', $routeParams);
         $scope.lang = localStorage.getItem('lang');
         $scope.pageClass = 'question';
         $scope.bgClass = 'intro-bg';
@@ -285,6 +287,7 @@
         $scope.catColor = $routeParams.catColor;
         $scope.showPopup = (localStorage.getItem('showIntro') == undefined) ? true : false;
         $scope.bonus = (localStorage.getItem('showIntro') == undefined) ? true : false;
+        $scope.isNew;
         $scope.bonusCounting;
         $scope.general = false;
         $scope.blessing = '';
@@ -303,7 +306,7 @@
         $scope.usersAnswersIds = new Array();
         $scope.timerToBonus = 0;
 
-        var data = { userId: localStorage.getItem('userId'), categoryId: $scope.catId, qType: 'new', lang: $scope.lang };
+        var data = { userId: localStorage.getItem('userId'), categoryId: $scope.catId, qType: 'answered', lang: $scope.lang };
 
         console.log(data);
         Switcher.getSessions('questionHandler', 'getUserQuestionByCategory', data)
@@ -312,16 +315,16 @@
                     $scope.thisQuestion = res;
                     $scope.thisQuestion.bonus = $scope.thisQuestion.credits / 2;
                     console.log('$scope.thisQuestion', $scope.thisQuestion);
-                    switch (parseInt(res.qTypeId)) {
-                        case 1: { $scope.oneAnswer = true; } break; //one answer
-                        case 2: { $scope.multipleAnswers = true; } break; //multiple answers
-                        case 3: { $scope.yesOrNo = true; } break; //yes or no
-                        case 4: { $scope.order = true; } break; //order
+                    switch (res.qTypeId) {
+                        case '1': { $scope.oneAnswer = true; } break; //one answer
+                        case '2': { $scope.multipleAnswers = true; } break; //multiple answers
+                        case '3': { $scope.yesOrNo = true; } break; //yes or no
+                        case '4': { $scope.order = true; } break; //order
                         default: { } break;
                     }
                     $scope.answersIds = res.questionOptionIds.split(',');
                     $scope.answerDesc = res.questionOptions.split(',');
-
+                    $scope.isNew = (res.qType == 'answered') ? false : true;
                     $scope.startBonusCalculation($scope.thisQuestion);
 
                     $scope.googleSearch();
@@ -344,6 +347,11 @@
                 '//cse.google.com/cse.js?cx=' + cx;
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(gcse, s);
+            var placeholder = setTimeout(function () {
+                $('.gsib_a > input').attr('placeholder', 'Google');
+                clearTimeout(placeholder);
+            }, 500);
+
         }
 
         $scope.startBonusCalculation = function (res) {
@@ -372,6 +380,9 @@
                 $scope.bonusCounting = $interval(function () {
                     if ($scope.thisQuestion.bonus > 0 && count == 6) {
                         var b = $scope.thisQuestion.bonus * 0.9;
+                        if (b.toFixed(1) == $scope.thisQuestion.bonus) {
+                            b = 0;
+                        }
                         $scope.thisQuestion.bonus = b.toFixed(1);
                         count = 0;
                     } else {
@@ -435,7 +446,7 @@
 
         $scope.checkOneAnswer = function (id) {
             var n = $('[data-id="' + id + '"]').prev('input').attr('name');
-            $('radio[name="' + n + '"]').prop('checked',false);
+            $('radio[name="' + n + '"]').prop('checked', false);
             $('[data-id="' + id + '"]').prev('input').prop('checked', true);
             var ans = $('[data-id="' + id + '"]').prev('input').attr('data-answer');
             $scope.userAnswers = new Array();
@@ -527,8 +538,10 @@
     },
 
     newQuestion: function ($scope, $routeParams, $interval, Switcher, View, Message) {
-        
-    }
+
+    },
+
+    oldQuestion: function ($scope, $routeParams, $interval, Switcher, View, Message) { }
 };
 
 keepItApp.controller(controllers);
