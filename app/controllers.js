@@ -47,7 +47,7 @@
             View.changeView('wheel');
         }
     },
-    register: function ($scope, View, Switcher, Message, Snooze) {
+    register: function ($scope, View, Switcher, Message) {
         $scope.lang = localStorage.getItem('lang');
         $scope.langString = {
             he: {
@@ -171,9 +171,9 @@
                 .error(function () { alert('error'); });
         }
 
-        Snooze.addSnooze();
+        
     },
-    settings: function ($scope) {
+    settings: function ($scope, Snooze) {
         $scope.setAlarm = false;
         $scope.pageClass = 'settings';
         $scope.bgClass = 'intro-bg';
@@ -182,6 +182,8 @@
             var alarm = prompt('הוספת תזכורת', '--:--');
             this.moreAlarm = alarm;
         }
+
+        Snooze.addSnooze();
     },
     wheel: function ($scope, Switcher, Message) {
         $scope.lang = localStorage.getItem('lang');
