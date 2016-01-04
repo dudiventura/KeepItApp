@@ -3,15 +3,21 @@ var app = {
     init: function () {
         keepItApp = angular.module('keepItApp', ['ngRoute', 'ngAnimate', 'ui.bootstrap', 'angular-loading-bar']);
 
-        if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+        if (app.isMobile()) {
             document.addEventListener('deviceready', app.onDeviceReady, false);
+        }
+        else {
+            app.onDeviceReady();
         }
     },
     onDeviceReady: function () {
         alert('onDeviceReady');
-        this.getPhoneLanguage();
-        this.getPhoneNumber();
-        this.startApp();
+        if (app.isMobile()) {
+            alert('is mobile');
+            app.getPhoneLanguage();
+            app.getPhoneNumber();
+        }
+        app.startApp();
     },
     getPhoneLanguage: function () {
         alert('getPhoneLanguage');
@@ -34,6 +40,9 @@ var app = {
                 angular.bootstrap(document, ['keepItApp']);
             }
         }, 500);
+    },
+    isMobile: function () {
+        (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) ? true : false;
     }
 }
 
